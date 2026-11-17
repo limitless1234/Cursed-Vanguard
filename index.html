@@ -138,6 +138,19 @@ body { padding: 0 4px; }
 .card .cbtn { white-space: nowrap; }
 @container (max-width: 520px) { .card { grid-template-columns: 2.2em 1fr; } .card .cbtn { grid-column: 1 / -1; min-height: 36px; width: 100%; } .pn-foot .cbtn { flex: 1; } }
 #ending { background: #000; }
+#dlg-portrait img { border-color: var(--pc, #f8fafc); }
+#dlg-portrait.glow img { box-shadow: 0 0 12px var(--pc, #fff); }
+#dlg-gear { display: none; position: absolute; left: 3px; right: 3px; bottom: 3px; background: rgba(9,13,22,.88); font-size: 11px; line-height: 1.25; text-align: center; }
+#chatter { position: absolute; left: 8px; right: 8px; bottom: 8px; z-index: 48; display: flex; flex-direction: column; gap: 4px; align-items: flex-start; pointer-events: none; }
+.chat { display: flex; gap: 8px; align-items: center; background: rgba(9,13,22,.95); border: 2px solid var(--c, #f8fafc); padding: 3px 10px 3px 3px; max-width: 92%; box-shadow: 0 0 10px rgba(0,0,0,.6); }
+.chat img { width: 32px; height: 50px; object-fit: cover; border: 2px solid var(--c, #f8fafc); flex: none; background: #090d16; }
+.chat-t b { display: block; color: var(--c); font-size: 11px; letter-spacing: 1px; }
+.chat-t span { font-size: 12px; line-height: 1.3; color: #f8fafc; }
+@container (max-width: 520px) { .chat-t span { font-size: 10px; } .chat-t b { font-size: 9px; } .chat img { width: 26px; height: 40px; } }
+.lgav { width: 11px; height: 17px; object-fit: cover; vertical-align: middle; margin-right: 4px; border: 1px solid #94a3b8; }
+.gp { display: flex; gap: .8em; align-items: center; background: #0f172a; border: 2px solid #475569; padding: .5em; }
+.gp-info b { display: block; color: #c084fc; letter-spacing: 1px; margin-bottom: .2em; }
+.gp-info small { display: block; color: #cbd5e1; line-height: 1.4; }
 </style>
 </head>
 <body>
@@ -171,9 +184,10 @@ body { padding: 0 4px; }
 
     <div id="panel" class="overlay-screen"></div>
     <div id="toast"></div>
+    <div id="chatter"></div>
 
     <div id="dialogue-overlay">
-      <div id="dlg-portrait"><b>RYAN</b><img id="dlg-img" alt="Ryan" src="data:image/jpeg;base64,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"></div>
+      <div id="dlg-portrait"><b>RYAN</b><img id="dlg-img" alt="Ryan" src="data:image/jpeg;base64,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"><img id="dlg-img-o" alt="" style="display:none"><div id="dlg-gear"></div></div>
       <div id="dlg-speaker">SYSTEM</div>
       <div id="dlg-text"></div>
       <div id="dlg-hint">[SPACE / ENTER / TAP]</div>
@@ -274,7 +288,7 @@ const ENEMY = {
   abom:     { n: 'FLESH ABOMINATION', hp: 115, dmg: 23, gold: 70, xp: 36, k: 'horror', drops: [['ecto', 1], ['relic', .45]] },
   hollowmayor: { n: 'THE HOLLOW MAYOR', hp: 220, dmg: 30, gold: 400, xp: 220, k: 'horror', boss: 1, hpx: 1.8, drops: [['sigil', 1], ['ecto', 1, 2, 3], ['relic', 1]],
               lines: ['Welcome home, traveler. Hollowmere always has room.', 'We did not die. We were REMADE.', 'Your skin looks so loose. Let me fix that.', 'The doctor’s key… he sent you to finish his work?', 'Every neighbor you cut down only sings louder!', 'I… was a good mayor once. Wasn’t I?', 'Burn the hall. Please… let us rest.'],
-              after: ['SYSTEM', 'The Hollow Mayor crumbles to dust. Hollowmere falls silent at last. THE CURSED VANGUARD WILL RETURN… (more to come!)'] },
+              after: ['SYSTEM', 'The Hollow Mayor crumbles to dust. Hollowmere falls silent at last.'] },
   // non-lethal duelists
   knight:   { n: 'SILVER KNIGHT',  hp: 70,  dmg: 15, gold: 30,  xp: 15,  duel: 1, who: 'SILVER KNIGHT', drops: [['ore', .25]],
               winL: '“Well fought! A duel is a duel. I yield and must return to my post.”', loseL: '“I yield nothing! Pay up.”' },
@@ -383,8 +397,8 @@ const QUESTS = [
 const SKILLS = {
   attack:  { ic: '⚔', name: 'Void Slash', cd: 0, base: () => S.armoured ? 26 : 14, label: () => S.armoured ? 'Void Slash' : 'Sickle Swing', msg: d => S.armoured ? `Ryan slashes with his Void Blade (${d} DMG)!` : `Ryan swings his chipped sickle (${d} DMG)!` },
   king:    { ic: '🐻', name: 'King Maul', who: 'KING', cd: 2, base: () => 30, hint: 'King isn’t in your party yet! Find him near the cabin!', msg: d => `KING lunges and mauls the enemy (${d} DMG)!` },
-  archer:  { ic: '🏹', name: 'Poison Shot', who: 'ARCHER', cd: 1, base: () => S.infected && !S.cured ? 12 : 26, hint: 'Archer hasn’t joined yet! Find him in the central woods!', msg: d => `ARCHER fires a poison arrow (${d} DMG)!` },
-  vanessa: { ic: '🔥', name: 'Fireball', who: 'VANESSA', cd: 2, base: () => 34, hint: 'Vanessa hasn’t joined yet! Find her near the guild!', msg: d => `VANESSA casts a blazing Fireball (${d} DMG)!` }
+  archer:  { ic: '🏹', name: 'Poison Shot', who: 'ARCHER', cd: 1, base: () => S.infected && !S.cured ? 12 : 26, hint: 'Archer hasn’t joined yet! Find her in the central woods!', msg: d => `ARCHER fires a poison arrow (${d} DMG)!` },
+  vanessa: { ic: '🔥', name: 'Fireball', who: 'VANESSA', cd: 2, base: () => 34, hint: 'Vanessa hasn’t joined yet! Find her in the east forest!', msg: d => `VANESSA casts a blazing Fireball (${d} DMG)!` }
 };
 
 /* ---------- Zones ---------- */
@@ -687,7 +701,13 @@ const S = {
 };
 const KEEP = ['zone', 'x', 'y', 'dir', 'hp', 'lvl', 'xp', 'gold', 'armoured', 'rank', 'party', 'lead', 'inv', 'gear', 'up', 'kills', 'quest', 'seen', 'picked', 'infected', 'cured', 'dark', 'key', 'darkSaid',
   'spawn', 'clock', 'crystals', 'looted', 'read', 'robbed', 'crimeValue', 'bounty', 'contract', 'fed', 'bridgeClear', 'stats', 'board'];
-const maxHp = () => 100 + 15 * (S.lvl - 1);
+const maxHp = w => 100 + 15 * (S.lvl - 1) + ({ KING: 60, ARCHER: -15, VANESSA: -25 }[w || S.party[S.lead]] || 0);
+KEEP.push('hps'); S.hps = { RYAN: 100 };
+const hpOf = w => S.hps[w] === undefined ? maxHp(w) : S.hps[w];
+Object.defineProperty(S, 'hp', { get() { return hpOf(S.party[S.lead]); }, set(v) { S.hps[S.party[S.lead]] = v; }, enumerable: true, configurable: true });
+function healParty() { S.party.forEach(w => S.hps[w] = maxHp(w)); }
+function reviveFallen() { S.party.forEach(w => { if (hpOf(w) <= 0) { S.hps[w] = Math.ceil(maxHp(w) / 4); toast(`${w} is back on their feet.`, 'good'); } }); }
+function swapOnKO() { const n = S.party.length; for (let i = 1; i < n; i++) { const j = (S.lead + i) % n; if (hpOf(S.party[j]) > 0) { const old = S.party[S.lead]; S.lead = j; blog(`${old} is down! ${S.party[j]} steps in!`, 's'); hud(); sfx(300, .15); return true; } } return false; }
 const xpNeed = l => l * 25 + Math.floor(l * l * l / 5);
 const weaponAtk = () => { const w = S.gear.weapon; return (w ? ITEMS[w].atk + 2 * (S.up[w] || 0) : 0) + 2 * (S.up.blade || 0); };
 const armorDef = () => { const a = S.gear.armor; return (a ? ITEMS[a].def + (S.up[a] || 0) : 0) + (S.armoured ? 6 + (S.up.void || 0) : 0); };
@@ -736,7 +756,7 @@ function load() {
     const dn = d.done || [];
     npcs.forEach(n => { n.done = dn.includes(n.id); });
     if (!S.bridgeClear && npcs.filter(n => n.t === 'undeadk').every(n => n.done)) S.bridgeClear = true;
-    if (S.hp <= 0) S.hp = maxHp();
+    if (S.hp <= 0) healParty();
     S.hp = Math.min(S.hp, maxHp());
     if (!maps[S.zone]) { S.zone = 'CABIN'; S.x = 3; S.y = 3; }
     S.trail = []; S.proj = []; S.chasers = []; S.hflag = {}; S.battle = null; S.chk = null;
@@ -779,7 +799,7 @@ function hud() {
   const pct = clamp(S.hp / maxHp() * 100, 0, 100); $('hud-hpbar').style.width = pct + '%'; $('hud-hpwrap').classList.toggle('low', pct < 30);
   $('hud-xpbar').style.width = clamp(S.xp / xpNeed(S.lvl) * 100, 0, 100) + '%';
   $('hud-gold').textContent = S.gold;
-  $('hud-party').textContent = S.party.length + '/4';
+  $('hud-party').textContent = S.party.map((w, i) => (i === S.lead ? '▶' : '') + w.slice(0, 2) + ' ' + hpOf(w)).join(' ');
   const night = isNight();
   $('hud-time').textContent = (night ? '🌙 ' : phase() === 'day' ? '☀ ' : '🌅 ') + clockStr();
   const w = $('hud-wanted'); w.style.display = S.bounty > 0 ? 'block' : 'none'; w.textContent = `🚨 BOUNTY ${S.bounty}g`;
@@ -790,7 +810,7 @@ function say(lines) { S.q = lines.slice(); S.mode = 'DIALOGUE'; next(); }
 function next() {
   const box = $('dialogue-overlay'), l = S.q.shift();
   if (!l) { box.classList.remove('active'); if (S.mode === 'DIALOGUE') S.mode = 'EXPLORE'; if (S.then) { const f = S.then; S.then = null; f(); } return; }
-  $('dlg-portrait').style.display = l[0] === 'RYAN' ? 'block' : 'none'; $('dlg-speaker').textContent = l[0]; $('dlg-text').textContent = l[1]; box.classList.add('active');
+  setPortrait(l[0]); $('dlg-speaker').textContent = l[0]; $('dlg-text').textContent = l[1]; box.classList.add('active');
 }
 
 /* ---------- Panels (shop / bag / craft / forge / journal / menus) ---------- */
@@ -847,21 +867,21 @@ function giveXp(n) {
   if (S.lvl >= 40) { hud(); return 0; }
   S.xp += n; let up = 0;
   while (S.lvl < 40 && S.xp >= xpNeed(S.lvl)) { S.xp -= xpNeed(S.lvl); S.lvl++; up++; }
-  if (up) S.hp = maxHp();
+  if (up) healParty();
   hud(); return up;
 }
 function giveGold(n) { S.gold += n; hud(); }
 
 /* ---------- Battle ---------- */
-const BTN_KEYS = { 1: 'attack', 2: 'king', 3: 'archer', 4: 'vanessa', 5: 'heal', 6: 'guard', 7: 'items', 8: 'run', 9: 'team' };
-const BTN_ORDER = ['attack', 'king', 'archer', 'vanessa', 'team', 'heal', 'guard', 'items', 'run'];
+const BTN_KEYS = { 1: 'attack', 2: 'king', 3: 'archer', 4: 'vanessa', 5: 'heal', 6: 'guard', 7: 'items', 8: 'run', 9: 'team', 0: 'swap' };
+const BTN_ORDER = ['attack', 'king', 'archer', 'vanessa', 'team', 'swap', 'heal', 'guard', 'items', 'run'];
 const BATTLE_USABLE = id => { const it = ITEMS[id]; return it && (it.heal || it.bomb || it.tonic); };
 
-function blog(msg, cls = '') {
+function blog(msg, cls = '', who) {
   const b = S.battle; if (!b) return;
-  String(msg).split('\n').forEach(t => { if (t) b.log.push([t, cls]); });
+  String(msg).split('\n').forEach(t => { if (t) b.log.push([t, cls, who]); });
   b.log = b.log.slice(-5);
-  const box = $('battle-log'); box.replaceChildren(...b.log.map(([t, c]) => el('div', c, t)));
+  const box = $('battle-log'); box.replaceChildren(...b.log.map(([t, c, w]) => { const d = el('div', c, t); if (w && PORT[w]) { const i = new Image(); i.src = PORT[w].src; i.className = 'lgav'; d.prepend(i); } return d; }));
 }
 function startBattle(type, lv, npc, ambush = 0) {
   const e = ENEMY[type], hp = Math.round(e.hp * (e.hpx || 1) * (1 + .2 * (lv - 1)));
@@ -909,6 +929,7 @@ function renderBattleUI() {
     if (SKILLS[k]) { const [ok, sub] = skillUsable(k), s = SKILLS[k]; mk('', key, `${s.ic} ${s.label ? s.label() : s.name}`, sub, () => turn(k), !ok); }
     else if (k === 'team') mk(b.combo >= 100 ? 'team' : '', key, '✦ Team Strike', b.combo >= 100 ? 'READY!' : `${b.combo}%`, () => turn('team'), b.combo < 100 || S.party.length < 2);
     else if (k === 'heal') { const id = HEAL_ORDER.find(i => has(i)); mk('heal', key, '🧪 Heal', id ? `${ITEMS[id].n} ×${S.inv[id]}` : 'none', () => turn('heal'), !id); }
+    else if (k === 'swap') mk('', key, '🔁 Swap', 'next ally', () => turn('swap'), !S.party.some((w, i) => i !== S.lead && hpOf(w) > 0));
     else if (k === 'guard') mk('', key, '🛡 Guard', 'blocks heavy', () => turn('guard'));
     else if (k === 'items') mk('', key, '🎒 Items', 'bombs etc', () => { b.menu = 'items'; renderBattleUI(); });
     else if (k === 'run') mk('run', key, '🏃 Run', b.e.boss ? 'no escape' : b.e.duel ? 'forfeit' : '', () => turn('run'));
@@ -936,6 +957,7 @@ function turn(k) {
   if (e.boss && ['attack', 'king', 'archer', 'vanessa', 'team'].includes(k) && now() < b.cd) return;
   let guard = false, msg = '', used = true;
   if (k === 'guard') { msg = 'You brace behind your guard!'; guard = true; b.combo = Math.min(100, b.combo + 10); b.guardBoost = true; }
+  else if (k === 'swap') { const o = S.party[S.lead]; let ok = false; for (let i = 1; i < S.party.length && !ok; i++) { const j = (S.lead + i) % S.party.length; if (hpOf(S.party[j]) > 0) { S.lead = j; ok = true; } } if (!ok) return blog('No ally can fight!', 's'); msg = `${o} falls back. ${S.party[S.lead]} takes the front!`; hud(); renderBattleUI(); }
   else if (k === 'run') return tryRun();
   else if (k === 'heal' || k.startsWith('use:')) {
     let id = k === 'heal' ? HEAL_ORDER.find(i => has(i)) : k.slice(4);
@@ -972,7 +994,7 @@ function turn(k) {
     b.combo = Math.min(100, b.combo + (k === 'attack' ? 18 : 25)); b.guardBoost = false;
     if (b.hp <= 0) return win();
   }
-  blog(msg, 'p');
+  blog(msg, 'p'); shout(k);
   // status ticks on enemy
   if (b.poison > 0) { b.hp -= 6; b.poison--; blog('Poison burns the enemy (6)!', 's'); popup('enemy', '-6', '#4ade80'); }
   if (b.burn > 0) { const d = 5 + Math.floor(S.lvl / 2); b.hp -= d; b.burn--; blog(`Flames scorch the enemy (${d})!`, 's'); popup('enemy', '-' + d, '#fb923c'); }
@@ -1001,7 +1023,7 @@ function enemyPhase(guard) {
   b.cd = e.boss ? now() + 3200 : 0; b.lockedUI = null;
   for (const k in b.cds) if (b.cds[k] > 0) b.cds[k]--;
   if (b.buffAtk > 0) b.buffAtk--; if (b.buffDef > 0) b.buffDef--;
-  if (S.hp <= 0) { blog(`${e.n} hits you for ${hit} DMG!`, 'e'); return e.duel ? loseDuel() : die(); }
+  if (S.hp <= 0) { blog(`${e.n} hits you for ${hit} DMG!`, 'e'); if (!e.duel && swapOnKO()) { b.intent = 'atk'; renderBattleUI(); return; } return e.duel ? loseDuel() : die(); }
   b.guardBoost = guard;
   let line = hit ? `${heavy ? 'HEAVY STRIKE! ' : ''}${e.n} hits back for ${hit} DMG!${guard ? ' (guarded)' : ''}` : '';
   if (line) blog(line, 'e');
@@ -1028,7 +1050,7 @@ function win() {
   const b = S.battle, e = b.e, L = [];
   b.over = true; sfx(660, .1); setTimeout(() => sfx(880, .2), 110);
   const gold = Math.round(e.gold * (1 + .5 * (b.lv - 1)) * (hasLuck() ? 1.25 : 1)), xp = e.xp * b.lv;
-  endBattle();
+  endBattle(); reviveFallen();
   if (b.npc) {
     if (b.npc.chase) S.chasers = S.chasers.filter(c => c !== b.npc);
     else if (e.duel) b.npc.leaving = now(); else { b.npc.done = true; b.npc.rsAt = now() + 240000; }
@@ -1046,6 +1068,7 @@ function win() {
   if (e.after) L.push(e.after);
   if (e.cure) L.push(['SYSTEM', 'You also found a RUSTED KEY on his belt. A locked door in the Deadwood awaits…']);
   if (e.duel) L.push([e.who, e.winL]);
+  { const rc = REACT[b.type]; if (rc) S.party.filter(p => p !== 'RYAN' && rc[p]).slice(0, 2).forEach(p => L.push([p, rc[p]])); }
   if (e.k === 'undead' && b.npc && b.npc.t === 'undeadk' && npcs.filter(n => n.t === 'undeadk').every(n => n.done)) { S.bridgeClear = true; L.push(['SYSTEM', 'The last Undead Knight falls. The way across the bridge is open!']); }
   if (e.hunter && !e.boss) L.push(['SYSTEM', S.bounty > 0 ? `The hunter drops his contract. Your bounty falls to ${S.bounty}g.` : 'Your bounty is cleared. The hunters call off the chase!']);
   save();
@@ -1075,7 +1098,7 @@ function die() {
 function respawn() {
   $('death-screen').classList.remove('active');
   const sp = S.spawn && maps[S.spawn.zone] ? S.spawn : { zone: 'CABIN', x: 3, y: 3 };
-  S.zone = sp.zone; const [fx, fy] = freeNear(sp.zone, sp.x, sp.y); S.x = fx; S.y = fy; S.hp = maxHp(); S.trail = []; S.ox = S.oy = 0; S.mode = 'EXPLORE';
+  S.zone = sp.zone; const [fx, fy] = freeNear(sp.zone, sp.x, sp.y); S.x = fx; S.y = fy; healParty(); S.trail = []; S.ox = S.oy = 0; S.mode = 'EXPLORE';
   syncResidents(true); hud(); save();
   say([['SYSTEM', `You gasped awake ${sp.zone === 'CABIN' ? 'beside your crimson bed inside the Cabin' : 'at your last resting place'}. HP fully restored!`]]);
 }
@@ -1109,14 +1132,14 @@ function act(n) {
   const join = (who, line) => { n.done = true; S.party.push(who); hud(); toast(`${who} joined your party!`, 'good'); jingle(520, 660, 880); say(line); };
   if (n.chase) return startBattle(n.t, n.lv, n, 0);
   if (n.t === 'crystal') crystalMenu(n);
-  else if (n.t === 'chest') { n.done = true; S.armoured = true; say([['SYSTEM', 'SKILL UNLOCKED: SUMMON!'], ['RYAN', 'Spiked Black Dragon-Scale Armour & Void Broadsword equipped!']]); }
-  else if (n.t === 'king') join('KING', [['SYSTEM', 'COMPANION FOUND: KING (GRIZZLY BEAR)!'], ['RYAN', '“King joined your party! Press TAB anytime to switch who leads!”']]);
-  else if (n.t === 'archer') join('ARCHER', [['ARCHER', '“My name is Archer. Switch to me with TAB and press F to shoot poison arrows!”']]);
-  else if (n.t === 'vanessa') join('VANESSA', [['VANESSA', '“I’m Vanessa! Switch to me with TAB and press F to cast Fireballs!”']]);
+  else if (n.t === 'chest') { n.done = true; S.armoured = true; say([['SYSTEM', 'SKILL UNLOCKED: SUMMON!'], ['RYAN', '“A farmer shouldn’t own armour like this… yet it fits as if it were made for me. Spiked Black Dragon-Scale Armour & Void Broadsword equipped!”']]); }
+  else if (n.t === 'king') join('KING', [['SYSTEM', 'COMPANION FOUND: KING (GRIZZLY BEAR)!'], ['KING', '*A low rumble that somehow sounds like a promise.* “A friend’s back is a place you protect. Always.”'], ['RYAN', '“King joined your party! Press TAB anytime to switch who leads!”']]);
+  else if (n.t === 'archer') join('ARCHER', [['ARCHER', '“My name is Aerin, but everyone just calls me Archer. The wind hears. I simply speak through it.”'], ['ARCHER', '“Switch to me with TAB and press F to shoot poison arrows!”']]);
+  else if (n.t === 'vanessa') join('VANESSA', [['VANESSA', '“I’m Vanessa. Magic isn’t just power. It’s freedom.”'], ['VANESSA', '“Switch to me with TAB and press F to cast Fireballs! Try to keep up.”']]);
   else if (n.t === 'receptionist') guild();
   else if (n.t === 'chest2') { n.done = true; const m = 1 + S.lvl * .05; addItem('elixir', 3); const g = Math.round(150 * m); S.gold += g; hud(); say([['SYSTEM', `You found 3 Elixirs and ${g} gold in the old chest!`]]); }
   else if (n.t === 'doctor') doctor(n);
-  else if (n.t === 'note') say([['TORN DIARY', n.text]]);
+  else if (n.t === 'note') say([[n.who || 'TORN DIARY', n.text]]);
   else if (n.t === 'chest3') { n.done = true; addItem('elixir', 2); addItem('relic'); addItem('ecto', 2); const g = Math.round(250 * (1 + S.lvl * .05)); S.gold += g; hud(); say([['SYSTEM', `A hidden stash: 2 Elixirs, an Eldritch Relic, 2 Ectoplasm and ${g} gold!`]]); }
   else if (n.t === 'lockdoor') {
     if (!S.key) say([['LOCKED DOOR', 'A heavy iron door half-buried in roots. It needs a key… The Old Knight Doctor past the bridge may know where it is.']]);
@@ -1237,11 +1260,11 @@ function objective() {
   const npc = id => npcs.find(n => n.id === id), T = (text, n) => ({ text, z: n ? n.zone : null, x: n ? n.x : 0, y: n ? n.y : 0 });
   if (S.infected && !S.cured) return T('Archer is infected! Find the Old Knight Doctor in the quiet house beyond the Old Bridge.', npc('doctor'));
   if (!S.armoured) return T('Open the black chest in the north-west forest to unlock your true power.', npc('chest'));
-  for (const [who, id, where] of [['KING', 'king', 'near the cabin'], ['ARCHER', 'archer', 'in the central woods'], ['VANESSA', 'vanessa', 'near the guild']])
+  for (const [who, id, where] of [['KING', 'king', 'near the cabin'], ['ARCHER', 'archer', 'in the central woods'], ['VANESSA', 'vanessa', 'in the east forest']])
     if (!S.party.includes(who)) return T(`Recruit ${who} ${where}.`, npc(id));
   const q = QUESTS[S.quest];
   if (!q) return T('All challenges cleared! Take Guild contracts, craft and upgrade gear, or hunt for rare loot.', null);
-  if ((S.kills[q.k] || 0) >= q.n) return T('Return to the Guild Receptionist (north-east of the forest) to claim your reward.', npc('recep'));
+  if ((S.kills[q.k] || 0) >= q.n) return T('Return to the Guild Receptionist (Adventurers Guild, Stonebridge Village) to claim your reward.', npc('recep'));
   const alive = id => { const n = npc(id); return n && !n.done ? n : null; };
   if (q.k === 'wolves') return T('Hunt Forest Wolves — roam the tall grass of the forest.', alive('alpha'));
   if (q.k === 'bandits') return T('Find the bandits on the forest roads.', alive('scout') || alive('leader'));
@@ -1326,13 +1349,13 @@ function bedMenu() {
   }
   if (z !== 'CABIN') return say([['BED', 'Beds at the Inn are rented through the Innkeeper.']]);
   choice('🛏 CRIMSON BED', `It's ${clockStr()}. Rest here?`, [
-    ['😴 Rest (restore HP, set respawn)', () => { S.hp = maxHp(); S.spawn = { zone: 'CABIN', x: 3, y: 3 }; hud(); save(); say([['CRIMSON BED', 'You rested. HP fully restored & respawn point set!']]); }],
+    ['😴 Rest (restore HP, set respawn)', () => { healParty(); S.spawn = { zone: 'CABIN', x: 3, y: 3 }; hud(); save(); say([['CRIMSON BED', 'You rested. HP fully restored & respawn point set!']]); }],
     ['🌙 Sleep until nightfall (21:00)', () => sleepTo(21 * 60)],
     ['🌅 Sleep until morning (07:00)', () => sleepTo(7 * 60)]
   ]);
 }
 function sleepTo(min) {
-  S.clock = min; S.hp = maxHp(); S.spawn = { zone: S.zone, x: S.zone === 'CABIN' ? 3 : 3, y: S.zone === 'CABIN' ? 3 : 2 }; S.fade = now(); syncResidents(true); hud(); save();
+  S.clock = min; healParty(); S.spawn = { zone: S.zone, x: S.zone === 'CABIN' ? 3 : 3, y: S.zone === 'CABIN' ? 3 : 2 }; S.fade = now(); syncResidents(true); hud(); save();
   say([['SYSTEM', `You sleep soundly. It is now ${clockStr()}. HP fully restored & respawn point set!`]]);
 }
 function innMenu(n) {
@@ -1340,7 +1363,7 @@ function innMenu(n) {
   openPanel(b => {
     b.head('🍺 THE GILDED STAG', S.gold + 'g').msg('“Welcome to the Stag! A bed, a bite, or a bit of gossip?”');
     b.menu([
-      [`🛏 Rent a bed (${cost}g): rest & set respawn`, () => { if (S.gold < cost) return toast('Not enough gold.', 'bad'); S.gold -= cost; S.hp = maxHp(); S.spawn = { zone: 'V2', x: 3, y: 2 }; hud(); save(); closePanel(); say([['INNKEEPER', '“Sleep well! You look half dead.”'], ['SYSTEM', 'HP restored. This inn is now your respawn point.']]); }, S.gold >= cost ? '' : 'dis'],
+      [`🛏 Rent a bed (${cost}g): rest & set respawn`, () => { if (S.gold < cost) return toast('Not enough gold.', 'bad'); S.gold -= cost; healParty(); S.spawn = { zone: 'V2', x: 3, y: 2 }; hud(); save(); closePanel(); say([['INNKEEPER', '“Sleep well! You look half dead.”'], ['SYSTEM', 'HP restored. This inn is now your respawn point.']]); }, S.gold >= cost ? '' : 'dis'],
       [`🌅 Rent a bed until morning (${cost}g)`, () => { if (S.gold < cost) return toast('Not enough gold.', 'bad'); S.gold -= cost; closePanel(); sleepTo(7 * 60); }, S.gold >= cost ? '' : 'dis'],
       [`🍲 Buy a Berry Stew (${meal}g)`, () => { if (S.gold < meal) return toast('Not enough gold.', 'bad'); S.gold -= meal; addItem('stew'); hud(); toast('🍲 Berry Stew bought.', 'good'); renderPanel(); }, S.gold >= meal ? '' : 'dis'],
       ['🗣 Ask for rumors', () => { closePanel(); say([['INNKEEPER', pick(GOSSIP)], ['INNKEEPER', hintLine()]]); }]
@@ -1582,8 +1605,9 @@ function warp(w) {
   const e = ENTER[S.zone], zi = ZONES[S.zone] || {};
   if (zi.vhouse !== undefined) toast(`🏠 ${HOUSES[zi.vhouse].name} — ${HOUSES[zi.vhouse].flavor}`);
   if (e && !S.seen[S.zone]) {
-    S.seen[S.zone] = 1; const L = [e];
-    if (S.zone === 'BRIDGE' && S.party.includes('ARCHER') && !S.cured) { S.infected = true; L.push(['ARCHER', '“*cough* My arm… that ghoul’s bite is spreading! I feel cold…”'], ['RYAN', '“Hold on, Archer. Beyond this bridge there must be a healer.”'], ['SYSTEM', 'ARCHER IS INFECTED! His arrows weaken until he is cured.']); }
+    S.seen[S.zone] = 1; const L = [e].concat(ENTER2[S.zone] ? ENTER2[S.zone]() : []);
+    { const bn = BANTER[S.zone]; if (bn) S.party.filter(p => p !== 'RYAN' && bn[p]).slice(0, 2).forEach(p => L.push([p, bn[p]])); }
+    if (S.zone === 'BRIDGE' && S.party.includes('ARCHER') && !S.cured) { S.infected = true; L.push(['ARCHER', '“*cough* My arm… that ghoul’s bite is spreading! I feel cold…”'], ['RYAN', '“Hold on, Archer. Beyond this bridge there must be a healer.”'], ['SYSTEM', 'ARCHER IS INFECTED! Her arrows weaken until she is cured.']); }
     if (flag && flag.thefts) S.then = () => lawArrives(flag);
     say(L);
   } else if (flag && flag.thefts) lawArrives(flag);
@@ -1600,7 +1624,7 @@ function shoot() {
   const [dx, dy] = DIRS[S.dir], who = S.party[S.lead], x = S.x * T + 6, y = S.y * T + 6;
   const P = {
     ARCHER: { v: 5, w: 6, h: 3, c: '#4ade80', life: 22 }, VANESSA: { v: 4, w: 6, h: 6, c: '#f97316', life: 24 },
-    KING: { v: 2, w: 10, h: 10, c: '#fbbf24', life: 6, o: 10 }, RYAN: { v: 2, w: 10, h: 10, c: S.armoured ? '#a855f7' : '#cbd5e1', life: 6, o: 10 }
+    KING: { v: 2, w: 10, h: 10, c: '#fbbf24', life: 6, o: 10 }, RYAN: { v: 2, w: 10, h: 10, c: GEAR_COL[S.gear.weapon] || (S.armoured ? '#a855f7' : '#cbd5e1'), life: 6, o: 10 }
   }[who], o = P.o || 0;
   S.proj.push({ x: x + dx * o, y: y + dy * o, vx: dx * P.v, vy: dy * P.v, w: P.w, h: P.h, c: P.c, life: P.life });
   sfx(who === 'VANESSA' ? 300 : 600, .05);
@@ -1616,7 +1640,7 @@ function stepShots() {
     if (p.life <= 0 || solid(S.zone, tx, ty) || (ch && !ch.hunter)) S.proj.splice(i, 1);
   }
 }
-function switchLead() { if (S.party.length > 1) { S.lead = (S.lead + 1) % S.party.length; hud(); sfx(660, .05); } }
+function switchLead() { if (S.party.length > 1) { S.lead = (S.lead + 1) % S.party.length; hud(); sfx(660, .05); toast(`${S.party[S.lead]} takes the lead (${S.hp}/${maxHp()} HP)`); } }
 
 /* ---------- Shop ---------- */
 let SHOP_QTY = 1;
@@ -1641,14 +1665,16 @@ function sellValue(id, fence) {
 function shop(n, msg) {
   const fence = n.t === 'fence', title = fence ? '🕶 THE FENCE' : '🛒 ' + (n.name || 'MERCHANT');
   const intro = msg || (n.lines ? n.lines[0] : fence ? '“Quiet now. I buy what others won’t ask about.”' : '“Welcome, traveler. Fine wares, no questions.”');
-  const tab = S.shopTab || 'buy';
+  S.shopTab = 'buy';
   openPanel(b => {
+    const tab = S.shopTab || 'buy';
     b.head(title, S.gold + 'g').msg(intro).tabs([['BUY', tab === 'buy', () => { S.shopTab = 'buy'; renderPanel(); }], ['SELL', tab === 'sell', () => { S.shopTab = 'sell'; renderPanel(); }]]);
     if (tab === 'buy') {
+      if (n.stock.some(id => ITEMS[id].slot)) b.raw(gearPreview());
       n.stock.forEach(id => {
         const it = ITEMS[id], locked = it.minLv && S.lvl < it.minLv - 2, price = gearPrice(id), tot = price * (it.slot ? 1 : SHOP_QTY), can = !locked && S.gold >= tot;
         const owned = S.inv[id] || 0, c = cmpText(id);
-        b.card({ ic: it.ic, title: it.n + (owned ? `  (own ${owned})` : ''), desc: locked ? `🔒 Reach level ${it.minLv - 2} to unlock.` : (statText(id) || it.d), html: c ? el('small', '', c) : null, dis: locked || !can,
+        b.card({ ic: it.ic, title: it.n + (owned ? `  (own ${owned})` : ''), desc: locked ? `🔒 Reach level ${it.minLv - 2} to unlock.` : (statText(id) || it.d), html: it.slot ? el('div', '', [c ? el('small', '', c) : null, ryanCanvas({ [it.slot]: id }, 2)]) : (c ? el('small', '', c) : null), dis: locked || !can,
           btn: locked ? ['LOCKED', () => {}] : [`${tot}g`, () => buy(n, id), 'gold'] });
       });
     } else {
@@ -1667,7 +1693,7 @@ function buy(n, id) {
   const it = ITEMS[id], price = gearPrice(id), q = it.slot ? 1 : SHOP_QTY;
   if (S.gold < price * q) return toast('Not enough gold.', 'bad');
   S.gold -= price * q; addItem(id, q); hud(); sfx(900, .06);
-  if (it.slot) { const cur = S.gear[it.slot], better = !cur || ((it.atk || 0) + (it.def || 0) > (ITEMS[cur].atk || 0) + (ITEMS[cur].def || 0)); if (better) { S.gear[it.slot] = id; toast(`Equipped ${it.n}!`, 'good'); } }
+  if (it.slot) { const cur = S.gear[it.slot], better = !cur || ((it.atk || 0) + (it.def || 0) > (ITEMS[cur].atk || 0) + (ITEMS[cur].def || 0)); if (better) { S.gear[it.slot] = id; toast(`Equipped ${it.n}!`, 'good'); equipCheer(id); } }
   renderPanel();
 }
 
@@ -1684,13 +1710,13 @@ function invPanel() {
       if (!l.length) b.sec('No usable items.');
       l.forEach(id => { const it = ITEMS[id]; b.card({ ic: it.ic, title: `${it.n} ×${S.inv[id]}`, desc: it.d, dis: !it.heal, btn: it.heal ? ['USE', () => { if (!useHealItem(id)) toast('HP already full.'); renderPanel(); }] : null }); });
     } else if (BAG_TAB === 'gear') {
-      b.sec('EQUIPPED / OWNED');
+      b.raw(gearPreview()); b.sec('EQUIPPED / OWNED');
       b.card({ ic: S.armoured ? '🗡️' : '🔪', title: (S.armoured ? 'Void Broadsword' : 'Chipped Sickle') + (S.up.blade ? ` +${S.up.blade}` : ''), desc: `Ryan’s own weapon. ${S.up.blade ? 'Forged +' + 2 * S.up.blade + ' ATK. ' : ''}Always equipped.`, eq: 1 });
       if (S.armoured) b.card({ ic: '🖤', title: 'Void Dragon-Scale Armour' + (S.up.void ? ` +${S.up.void}` : ''), desc: `Ryan’s own armour. DEF +${6 + (S.up.void || 0)}. Always worn.`, eq: 1 });
       ids.filter(id => ITEMS[id].slot).forEach(id => {
         const it = ITEMS[id], on = S.gear[it.slot] === id, up = S.up[id] || 0;
         const st = it.atk !== undefined ? `ATK +${it.atk + 2 * up}` : it.def !== undefined && it.slot === 'armor' ? `DEF +${it.def + up}` : statText(id) || it.d;
-        b.card({ ic: it.ic, title: `${upName(id)}  [${it.slot}]`, desc: st + (it.slot === 'charm' ? ' · ' + it.d : ''), eq: on, btn: [on ? 'REMOVE' : 'EQUIP', () => { S.gear[it.slot] = on ? null : id; sfx(500, .05); hud(); renderPanel(); }] });
+        b.card({ ic: it.ic, title: `${upName(id)}  [${it.slot}]`, desc: st + (it.slot === 'charm' ? ' · ' + it.d : ''), eq: on, html: ryanCanvas({ [it.slot]: id }, 2), btn: [on ? 'REMOVE' : 'EQUIP', () => { S.gear[it.slot] = on ? null : id; if (!on) equipCheer(id); sfx(500, .05); hud(); renderPanel(); }] });
       });
     } else if (BAG_TAB === 'mats') {
       const l = ids.filter(id => ITEMS[id].mat); if (!l.length) b.sec('No materials yet. Hunt, mine ore, forage herbs!');
@@ -1719,7 +1745,7 @@ function craftPanel(st) {
 function craft(r, st, q) {
   const it = ITEMS[r.out]; if (!Object.entries(r.ing).every(([id, n]) => has(id, n * q))) return toast('Missing materials.', 'bad');
   Object.entries(r.ing).forEach(([id, n]) => takeItem(id, n * q)); addItem(r.out, r.n * q); S.stats.crafted++;
-  if (it.slot && !S.gear[it.slot]) { S.gear[it.slot] = r.out; toast(`Crafted & equipped ${it.n}!`, 'good'); } else toast(`Crafted ${it.n}${r.n * q > 1 ? ' ×' + r.n * q : ''}!`, 'good');
+  if (it.slot && !S.gear[it.slot]) { S.gear[it.slot] = r.out; toast(`Crafted & equipped ${it.n}!`, 'good'); equipCheer(r.out); } else toast(`Crafted ${it.n}${r.n * q > 1 ? ' ×' + r.n * q : ''}!`, 'good');
   sfx(300, .08, 'square', .06); sfx(450, .08, 'square', .06, .1); sfx(700, .12, 'square', .06, .2); renderPanel();
 }
 
@@ -1882,7 +1908,7 @@ SPR.peddler = SPR.merchant;
 const draw = (x, y, list) => list.forEach(([c, a, b, w, h]) => { ctx.fillStyle = c; ctx.fillRect(x + a, y + b, w, h); });
 function sprite(x, y, key, step = 0) {
   const f = Math.sin(now() * .006) * 2;
-  const list = key === 'crystal' ? [['#9333ea', 5, 3 + f, 6, 8], ['#e879f9', 6, 4 + f, 4, 5], ['#fff', 7, 5 + f, 2, 2]] : SPR[key] || SPR.thief;
+  const list = key === 'crystal' ? [['#9333ea', 5, 3 + f, 6, 8], ['#e879f9', 6, 4 + f, 4, 5], ['#fff', 7, 5 + f, 2, 2]] : (key === 'ryan' || key === 'ryanA') ? ryanList() : SPR[key] || SPR.thief;
   draw(x, y, [['rgba(0,0,0,.4)', 3, 14, 10, 2]]);
   draw(x, y - (step === 1 ? 1 : 0), list);
 }
@@ -1924,7 +1950,7 @@ function drawTile(ch, px, py, c, r, z, m, t) {
     case 'F': R(px, py, [['#292524', 0, 2, 16, 14], ['#57534e', 0, 2, 16, 2], ['rgba(249,115,22,' + (Math.sin(t + c) * .25 + .75) + ')', 3, 5, 10, 8], ['#fef08a', 5, 7, 6, 5]]); LIGHTS.push([px + 8, py + 8, 34]); break;
     case 'A': R(px, py, [['#1f2937', 2, 5, 12, 4], ['#374151', 4, 9, 8, 3], ['#111827', 3, 12, 10, 3], ['#9ca3af', 3, 5, 10, 1]]); break;
     case 'H': {
-      const up = m[r - 1]?.[c] === 'H', down = m[r + 1]?.[c] === 'H', bx = z === 'VILLAGE' ? HOUSE_BLOCKS.find(([hx, hy]) => c >= hx && c < hx + 5 && r >= hy && r < hy + 3) : null, col = bx ? ['#991b1b', '#1e3a8a', '#92400e', '#166534', '#57534e', '#6b21a8', '#9f1239'][HOUSE_BLOCKS.indexOf(bx)] : '#3f1d2e';
+      const up = m[r - 1]?.[c] === 'H', down = m[r + 1]?.[c] === 'H', bx = z === 'VILLAGE' ? (HOUSE_BLOCKS.find(([hx, hy]) => c >= hx && c < hx + 5 && r >= hy && r < hy + 3) || (c >= 28 && c < 33 && r >= 15 && r < 18 ? [28, 15] : null)) : (() => { let x = c; while (m[r]?.[x - 1] === 'H') x--; return [x, 0]; })(), col = bx ? (['#991b1b', '#1e3a8a', '#92400e', '#166534', '#57534e', '#6b21a8', '#9f1239'][HOUSE_BLOCKS.indexOf(bx)] || (z === 'VILLAGE' ? '#6d28d9' : '#1e3a5f')) : '#3f1d2e';
       if (z === 'GHOST') { R(px, py, [['#3f1d2e', 0, 0, 16, 16], ['#27272a', 2, 3, 3, 3], ['#18181b', 8, 8, 4, 6]]); break; }
       if (!up) R(px, py, [[col, 0, 0, 16, 16], ['rgba(0,0,0,.25)', 0, 5, 16, 1], ['rgba(0,0,0,.25)', 0, 10, 16, 1], ['rgba(255,255,255,.12)', 0, 0, 16, 2], ['rgba(0,0,0,.35)', 0, 14, 16, 2]]);
       else if (down) { R(px, py, [['#d6c7a1', 0, 0, 16, 16], ['rgba(0,0,0,.08)', 0, 8, 16, 1]]); const k = c - bx[0]; if (k === 1 || k === 3) R(px, py, [['#3f2a14', 3, 3, 10, 9], [dayLight ? '#7dd3fc' : '#fde68a', 4, 4, 8, 7], ['#3f2a14', 7, 4, 2, 7], ['#3f2a14', 4, 7, 8, 1]]); if (!dayLight && (k === 1 || k === 3)) LIGHTS.push([px + 8, py + 8, 22]); }
@@ -2080,7 +2106,7 @@ function drawBattle() {
   const lunge = (who) => { const a = b.anim; if (!a || a.who !== who) return 0; const d = t - a.t0; return d < 260 ? Math.sin(d / 260 * Math.PI) * (who === 'p' ? 26 : -26) : 0; };
   const put = (cx, key, k, off) => { ctx.save(); ctx.scale(k, k); sprite((cx + off - 8 * k) / k, (gy + 2 - 16 * k) / k + Math.sin(t * .004 + cx) * .5, key); ctx.restore(); };
   for (let i = 1; i < S.party.length; i++) put(24 - i * 4 + i * 12, keyOf(S.party[(S.lead + i) % S.party.length]), 1.4, 0);
-  if (b.e.boss && S.party[S.lead] === 'RYAN' && RY.complete && RY.naturalWidth) { const o = lunge('p'); ctx.fillStyle = '#090d16'; ctx.fillRect(60 + o, 54, 50, 56); ctx.drawImage(RY, 62 + o, 56, 46, 52); ctx.strokeStyle = '#f8fafc'; ctx.strokeRect(60.5 + o, 54.5, 50, 56); }
+  if (b.e.boss && S.party[S.lead] === 'RYAN' && RY.complete && RY.naturalWidth) { const o = lunge('p'); ctx.fillStyle = '#090d16'; ctx.fillRect(60 + o, 54, 50, 56); ctx.drawImage(RY, 62 + o, 56, 46, 52); ctx.strokeStyle = lookCol(); ctx.lineWidth = 2; ctx.strokeRect(61 + o, 55, 49, 55); ctx.lineWidth = 1; ctx.font = '8px sans-serif'; ctx.fillStyle = '#fff'; ctx.fillText(['weapon', 'armor', 'charm'].map(s => S.gear[s] ? ITEMS[S.gear[s]].ic : '').join(''), 62 + o, 120); }
   else put(78, keyOf(S.party[S.lead]), 2.5, lunge('p'));
   const eflash = b.anim && b.anim.who === 'p' && t - b.anim.t0 < 140;
   ctx.globalAlpha = eflash ? .55 : 1; put(190, b.type === 'bountymaster' ? 'bountymaster' : b.type, b.e.boss ? 4 : 2.5, lunge('e')); ctx.globalAlpha = 1;
@@ -2106,7 +2132,7 @@ function syncMusic() {
 let lastT = now();
 function loop() {
   const t = now(), dt = Math.min(100, t - lastT); lastT = t;
-  syncMusic();
+  syncMusic(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 1;
   try {
     if (S.mode === 'BATTLE') drawBattle();
     else { if (S.mode === 'EXPLORE') { stepShots(); tick(dt); } drawExplore(); }
@@ -2289,7 +2315,7 @@ link('TUNNEL', [0, 20], [1, 20], 'MINES', [39, 15], [38, 15]); link('VILLAGE', [
   for (let y = 1; y < 43; y++) for (let x = 1; x < 59; x++) m[y][x] = r() < .08 ? ',' : '.';
   for (let k = 0; k < 24; k++) { const cx = 3 + Math.floor(r() * 54), cy = 3 + Math.floor(r() * 36), rd = 1 + Math.floor(r() * 3); if (Math.abs(cx - 30) + Math.abs(cy - 42) < 10) continue; for (let j = -rd; j <= rd; j++) for (let i = -rd; i <= rd; i++) if (i * i + j * j <= rd * rd + 1 && m[cy + j]?.[cx + i] === '.') m[cy + j][cx + i] = 'X'; }
   m[43][30] = 'D';
-  const [px, py] = freeNear('FOREST', 30, 12); addN('FOREST', px, py, 'voidportal', 0, { id: 'voidportal', name: 'VOID PORTAL' }); carve('FOREST', px, py);
+  const [px, py] = (() => { let q; try { q = JSON.parse(localStorage.getItem('cvPortal')); } catch (e) {} if (q && !solid('FOREST', q[0], q[1])) return freeNear('FOREST', q[0], q[1]); for (let i = 0; i < 400; i++) { const x = rand(5, 58), y = rand(5, 42), ch = maps.FOREST[y][x]; if ((ch === '.' || ch === ',') && [[6, 20], [6, 40], [60, 40], [22, 40]].every(([a, b]) => Math.abs(a - x) + Math.abs(b - y) > 10) && !npcs.some(n => n.zone === 'FOREST' && Math.abs(n.x - x) + Math.abs(n.y - y) < 4)) { try { localStorage.setItem('cvPortal', JSON.stringify([x, y])); } catch (e) {} return freeNear('FOREST', x, y); } } return freeNear('FOREST', 30, 12); })(); addN('FOREST', px, py, 'voidportal', 0, { id: 'voidportal', name: 'VOID PORTAL' }); carve('FOREST', px, py);
   const [rx, ry] = freeNear('FOREST', px, py + 1); WARPS['VOID:30,43'] = ['FOREST', rx, ry]; placeMany('VOID', [['voidreaver', 4, 1]]);
 }
 /* hall / hell / heaven */
@@ -2307,8 +2333,117 @@ placeMany('FROST', [['frostwolf', 5, 0], ['yeti', 3, 1], ['iceshade', 2, 1], ['i
 placeMany('MINES', [['tunneler', 5, 0], ['oregolem', 3, 1], ['forgewraith', 1, 4]]); placeMany('DUNES', [['scorpion', 5, 0], ['sandwraith', 3, 1], ['mummy', 3, 1], ['sunpharaoh', 1, 4]]);
 placeMany('HARBOR', [['pirate', 4, 0], ['smuggler', 2, 0], ['captain', 1, 3]]);
 [['FROST', 24, 31], ['MARSH', 22, 2], ['MINES', 38, 15], ['DUNES', 2, 17], ['HARBOR', 17, 19]].forEach(([z, x, y]) => { const [fx, fy] = freeNear(z, x, y); addN(z, fx, fy, 'crystal', 0, { id: 'cry_' + z }); carve(z, fx, fy); });
+Object.assign(CRYSTAL_NAMES, { cry_FROST: 'Frostpeak Pass', cry_MARSH: 'Whispering Marsh', cry_MINES: 'The Old Mines', cry_DUNES: 'The Ashen Dunes', cry_HARBOR: 'Salthaven Harbor', crystal6: 'The Sunken Dungeon' });
 [['HARBOR', 14, 12, 'merchant', 'HARBOR TRADER', ['potion', 'elixir', 'firebomb', 'strtonic', 'skintonic', 'sword', 'plate', 'luck']], ['HARBOR', 20, 12, 'fence', 'SMUGGLER’S FENCE', ['lockpick', 'smoke']]].forEach(([z, x, y, t, nm, stock]) => { const [fx, fy] = freeNear(z, x, y); addN(z, fx, fy, t, 0, { id: 'm_' + nm.length + x, name: nm, stock }); });
-['FROST', 'MARSH', 'MINES', 'DUNES', 'HARBOR', 'DUNGEON', 'VOID'].concat(['FOREST', 'DEADWOOD', 'TUNNEL', 'VILLAGE']).forEach(connectZone);
+/* ---- v6.1: guild moves into Stonebridge ---- */
+{
+  maps.FOREST[8][54] = '.'; delete WARPS['FOREST:54,8'];
+  const v = maps.VILLAGE; for (let j = 0; j < 3; j++) for (let i = 0; i < 5; i++) v[15 + j][28 + i] = 'H';
+  v[17][30] = 'D'; v[18][30] = '.'; WARPS['VILLAGE:30,17'] = ['GUILD', 8, 9]; WARPS['GUILD:8,10'] = ['VILLAGE', 30, 18];
+  const c = npcs.find(n => n.id === 'civ4'); if (c) { c.x = c.hx = 33; c.y = c.hy = 19; }
+  ZGRAPH.FOREST = (ZGRAPH.FOREST || []).filter(e => e.to !== 'GUILD'); (ZGRAPH.VILLAGE = ZGRAPH.VILLAGE || []).push({ to: 'GUILD', x: 30, y: 17 });
+  ENTER.VILLAGE[1] += ' The Adventurers Guild hall stands near the market square.';
+}
+/* ---- v6.1: dungeon floors ---- */
+{
+  const RM0 = [[3, 27, 8, 6], [18, 26, 9, 7], [33, 27, 10, 6], [36, 14, 10, 7], [20, 12, 10, 8], [4, 12, 9, 7], [8, 3, 10, 6], [28, 3, 10, 6], [40, 3, 7, 6]];
+  const cn = (RM, i) => [RM[i][0] + (RM[i][2] >> 1), RM[i][1] + (RM[i][3] >> 1)];
+  const pop = (id, RM, i, t, lo, ex) => { const [x0, y0, w, h] = RM[i]; for (let a = 0; a < 100; a++) { const x = x0 + Math.floor(NR() * w), y = y0 + Math.floor(NR() * h); if (!isSolidCh(maps[id][y][x]) && maps[id][y][x] !== 'D' && !npcs.some(n => n.zone === id && Math.abs(n.x - x) + Math.abs(n.y - y) < 2)) return addN(id, x, y, t, ZONES[id].base + lo, ex); } };
+  [['DUNGEON2', 'THE SUNKEN DUNGEON · B2', 12], ['DUNGEON3', 'THE SUNKEN DUNGEON · B3', 13]].forEach(([z, nm, b]) => { ZONES[z] = { name: nm, dark: .68, base: b }; ENC[z] = ENC.DUNGEON; PAL[z] = PAL.DUNGEON; XC[z] = XC.DUNGEON; ENTER[z] = [nm, 'The stairs lead deeper. Torchlight flickers and the cultists are watching…']; });
+  ZONES.DUNGEON.name = 'THE SUNKEN DUNGEON · B1';
+  const wi = npcs.findIndex(n => n.zone === 'DUNGEON' && n.t === 'warden'); if (wi >= 0) npcs.splice(wi, 1);
+  const torches = (id, RM) => RM.forEach(([x, y]) => { if (maps[id][y][x] === '.') maps[id][y][x] = 'l'; });
+  torches('DUNGEON', RM0);
+  const mk = (id, fx, fy, seed) => {
+    const m = maps[id] = room(50, 36), r = rng(seed), RM = RM0.map(([x, y, w, h]) => [fx ? 50 - x - w : x, fy ? 36 - y - h : y, w, h]);
+    RM.forEach(([x, y, w, h]) => { for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) m[y + j][x + i] = r() < .22 ? ',' : '.'; });
+    for (let i = 0; i < 8; i++) { const [ax, ay] = cn(RM, i), [bx, by] = cn(RM, i + 1); for (let x = Math.min(ax, bx); x <= Math.max(ax, bx); x++) if (m[ay][x] === '#') m[ay][x] = '.'; for (let y = Math.min(ay, by); y <= Math.max(ay, by); y++) if (m[y][bx] === '#') m[y][bx] = '.'; }
+    torches(id, RM); return RM;
+  };
+  const R2 = mk('DUNGEON2', 1, 0, 61), R3 = mk('DUNGEON3', 0, 1, 73);
+  const [a0x, a0y] = cn(RM0, 8), [b0x, b0y] = cn(R2, 0), [b8x, b8y] = cn(R2, 8), [c0x, c0y] = cn(R3, 0), [c8x, c8y] = cn(R3, 8);
+  link('DUNGEON', [a0x, a0y], [a0x, a0y + 1], 'DUNGEON2', [b0x, b0y], [b0x, b0y + 1]);
+  link('DUNGEON2', [b8x, b8y], [b8x, b8y + 1], 'DUNGEON3', [c0x, c0y], [c0x, c0y + 1]);
+  [['DUNGEON2', R2, 'crystal7', b0x, b0y], ['DUNGEON3', R3, 'crystal8', c0x, c0y]].forEach(([id, RM, cid, x, y]) => addN(id, x + 2, y, 'crystal', 0, { id: cid }));
+  [['DUNGEON2', R2, 2], ['DUNGEON3', R3, 3]].forEach(([id, RM, f]) => { [1, 2, 3, 4, 5, 6, 7].forEach(i => { pop(id, RM, i, ['cultist', 'gargoyle', 'cultist', 'mimic'][(i + f) % 4], f + (i >> 1)); pop(id, RM, i, ['gargoyle', 'cultist'][(i + f) % 2], f + (i >> 1)); }); [2, 5].forEach(i => pop(id, RM, i, 'dchest', 0)); });
+  addN('DUNGEON3', c8x, c8y, 'warden', ZONES.DUNGEON3.base + 4);
+}
+/* ---- v6.1: dungeon enemies roam and hunt ---- */
+const _tick7 = tick; tick = function (dt) {
+  _tick7(dt);
+  if (S.mode !== 'EXPLORE' || !S.zone.startsWith('DUNGEON')) return;
+  const t = now(); if (t - (S.fade || 0) < 1500) return; let dm = null;
+  for (const n of npcs) {
+    const E = ENEMY[n.t]; if (n.zone !== S.zone || n.done || n.hidden || n.hide || n.leaving || !E || E.boss || E.duel || n.t === 'mimic') continue;
+    if (n.hx === undefined) { n.hx = n.x; n.hy = n.y; } if (t < (n.nm7 || 0)) continue; dm = dm || distMap(S.zone, S.x, S.y);
+    const d = dm.get(n.x + ',' + n.y); if (d !== undefined && d <= 1) { fight(n, 0); return; }
+    const hunt = d !== undefined && d <= 8; n.nm7 = t + (hunt ? 520 : 900 + Math.random() * 900);
+    let o = [[1, 0], [-1, 0], [0, 1], [0, -1]].map(([a, b]) => [n.x + a, n.y + b]).filter(([x, y]) => !solid(n.zone, x, y) && maps[n.zone][y][x] !== 'D' && !entityAt(x, y) && !(x === S.x && y === S.y));
+    o = hunt ? o.filter(([x, y]) => (dm.get(x + ',' + y) ?? 1e9) < d) : o.filter(([x, y]) => Math.abs(x - n.hx) + Math.abs(y - n.hy) <= 3);
+    if (o.length) { const [x, y] = pick(o); n.ox = (n.x - x) * T; n.oy = (n.y - y) * T; n.x = x; n.y = y; }
+  }
+};
+/* ---- v6.2: detail pass (props, ambience, lore, dialogue) ---- */
+'iubneqhs'.split('').forEach(ch => SOLID_SET.add(ch));
+Object.assign(FL, { i: ['A spike of clear ice. Something dark is frozen inside.', 'An ice pillar hums faintly in the wind.'], u: ['Tall reeds. Something splashes just out of sight.', 'Bog reeds, slick with black water.'], b: ['A heap of old bones. Some of them are gnawed.', 'Bones, picked clean long ago.'],
+  n: ['A rusted minecart. The wheels haven’t turned in years.'], e: ['A cactus with a faded rag tied to one arm: a trail marker.', 'A cactus. Touching it would be a mistake.'], q: ['A crystal spire of the Void. It pulses like a slow heartbeat.'], h: ['A brazier of hellfire. It gives off no warmth, only dread.'], s: ['A marble pillar, warm to the touch and faintly singing.'] });
+Object.assign(GOSSIP, {}); GOSSIP.push('“Frostpeak’s yetis follow the smell of cooking. Never camp with a hot stew.”', '“Folk say the Whispering Marsh talks. If it calls your name, don’t answer.”', '“The Old Mines were sealed after the cave-in. Someone reopened them.”', '“A Sun Pharaoh sleeps under the Ashen Dunes. Sensible people walk around.”', '“Salthaven pirates drink at the harbor. They pay in pearls and trouble.”', '“Cultists dug the Sunken Dungeon deeper every year. Nobody asked why.”', '“A violet rift opened in the forest. Hunters who went in came out… changed. Or not at all.”');
+const P7 = w => S.party.includes(w);
+const ENTER2 = {
+  FROST: () => [['RYAN', '“Cold enough to freeze the sickle to my hand.”']].concat(P7('VANESSA') ? [['VANESSA', '“Stay close. Fire does not fear winter.”']] : [], P7('KING') ? [['KING', '*snow piles on the bear’s head. He looks delighted.*']] : []),
+  MARSH: () => [['RYAN', '“The water is moving on its own. Watch your footing.”']].concat(P7('ARCHER') ? [['ARCHER', '“Fog this thick hides a lot of eyes. Stay off the open ground.”']] : []),
+  MINES: () => [['RYAN', '“Ore glitters everywhere, but the timbers are rotten. Stay off the old supports.”']].concat(P7('KING') ? [['KING', '*the bear sniffs the dark tunnels and growls low*']] : []),
+  DUNES: () => [['RYAN', '“Sand in my boots, sun in my eyes. Even the cacti look tired.”']].concat(P7('VANESSA') ? [['VANESSA', '“Heat doesn’t bother me. The tombs under us do.”']] : []),
+  HARBOR: () => [['RYAN', '“Gulls, tar and fish. A real harbor town.”'], ['SYSTEM', 'Dockhands argue over crates while a lookout watches the water.']],
+  DUNGEON: () => [['RYAN', '“Torches burning in a place this old. Somebody is still living here.”']],
+  DUNGEON2: () => [['RYAN', '“The air is colder down here. And I can hear chanting.”']].concat(P7('ARCHER') ? [['ARCHER', '“Watch the shadows. Nothing here is asleep.”']] : []),
+  DUNGEON3: () => [['SYSTEM', 'The deepest floor. A cold iron door stands at the far end.'], ['RYAN', '“Whatever the Warden guards, it’s right behind that door.”']],
+  VOID: () => [['RYAN', '“The ground ends in pits and the sky has no stars. How long can anything live here?”']]
+};
+const LORE = {
+  FROST: [['FROZEN TRAVELER', '“Day 4. The pass closed behind us. The wyrm sings at night. Don’t follow the singing.”'], ['SNOWED-IN SIGN', '“CAUTION: yetis. Do not feed. Do not run. They’re faster.”'], ['FROZEN JOURNAL', '“The ice shades were soldiers once. The wyrm froze them where they stood.”']],
+  MARSH: [['SUNKEN DIARY', '“The bog mother takes one villager each winter. This winter the water rose to my doorstep.”'], ['WITCH’S NOTE', '“Bring me venom and I’ll brew you the cure. — M.”'], ['WARPED SIGNPOST', '“THIS WAY TO SALTHAVEN” (the arrow points straight into the water.)']],
+  MINES: [['FOREMAN’S LOG', '“Struck mythril on the third level. The men won’t go back. They say the wall breathes.”'], ['SCRATCHED WALL', '“THE FORGE WRAITH WAS THE FOREMAN. DON’T LET HIM FINISH THE SHIFT.”'], ['MINE SIGN', '“Shift change at dusk. Do NOT work past dusk.”']],
+  DUNES: [['SCORCHED SCROLL', '“The pharaoh’s tomb opens only under a noon sun. Plan your dig accordingly.”'], ['DUSTY MAP', '“A buried tomb lies west of the harbor road. Hot, quiet, cursed.”'], ['BLEACHED PLAQUE', '“Here lies a thousand nameless travelers. The sun was kinder than the tomb.”']],
+  HARBOR: [['HARBORMASTER’S BOARD', '“No cargo unloaded after dusk. Pirates and smugglers will be dealt with — if the Watch ever arrives.”'], ['DOCKSIDE SIGN', '“Captain Blacktide’s ship is anchored at the far pier. Bring friends.”']],
+  DUNGEON: [['CULTIST PRAYER', '“Deeper, always deeper. The Warden promised us a door that opens on the end of the world.”']],
+  DUNGEON2: [['GARGOYLE PLAQUE', '“We guard what the cult dug up. Leave, or become stone.”']],
+  DUNGEON3: [['WARDEN’S ORDERS', '“Hold the iron door until the world ends. — The Dungeon Warden”']],
+  VOID: [['RIFT SCRATCHINGS', '“It doesn’t kill you. It copies you. Don’t look at your own shadow.”'], ['VOID MARKER', '“HERE THE WORLD STOPPED. TURN BACK.”']],
+  HELL: [['SCORCHED LEDGER', '“Debts of the damned: paid in screams, collected in fire.”']],
+  HEAVEN: [['GILDED PLAQUE', '“Every blessing is a trial in disguise.”']]
+};
+{
+  const near = (z, x, y, d) => npcs.some(n => n.zone === z && Math.abs(n.x - x) + Math.abs(n.y - y) < d);
+  const nearWarp = (z, x, y, d) => Object.entries(WARPS).some(([k, v]) => { const [wz, q] = k.split(':'), [a, b] = q.split(',').map(Number); return (wz === z && Math.abs(a - x) + Math.abs(b - y) < d) || (v[0] === z && Math.abs(v[1] - x) + Math.abs(v[2] - y) < d); });
+  const spot = (z, ok, t) => { const m = maps[z], w = m[0].length, h = m.length; for (let a = 0; a < 600; a++) { const x = 1 + Math.floor(NR() * (w - 2)), y = 1 + Math.floor(NR() * (h - 2)); if ((m[y][x] === '.' || m[y][x] === ',') && !near(z, x, y, 3) && !nearWarp(z, x, y, 5) && (!ok || ok(x, y)) && ![[1, 0], [-1, 0], [0, 1], [0, -1]].some(([dx, dy]) => isSolidCh(m[y + dy]?.[x + dx]) && m[y + dy][x + dx] !== '#')) return [x, y]; } return null; };
+  const scat = (z, ch, n, ok) => { for (let i = 0; i < n; i++) { const p = spot(z, ok); if (p) maps[z][p[1]][p[0]] = ch; } };
+  for (const z in LORE) LORE[z].forEach(([who, text]) => { const p = spot(z); if (p) addN(z, p[0], p[1], 'note', 0, { who, text }); });
+  scat('FROST', 'i', 30); scat('MARSH', 'u', 36); scat('MINES', 'n', 10); scat('MINES', 'z', 6); scat('MINES', 'l', 8); scat('DUNES', 'e', 24); scat('DUNES', 'b', 10); scat('VOID', 'q', 22);
+  scat('HARBOR', 'z', 8, (x, y) => y > 3 && y !== 11 && x !== 17); scat('HARBOR', 'U', 8, (x, y) => y > 3 && y !== 11 && x !== 17); scat('HARBOR', 'l', 6, (x, y) => y > 3 && y !== 11 && x !== 17);
+  scat('HELL', 'h', 12, x => x < 12 || x > 15); scat('HEAVEN', 's', 12, x => x < 12 || x > 15);
+  ['DUNGEON', 'DUNGEON2', 'DUNGEON3'].forEach(z => { scat(z, 'b', 9); scat(z, 'U', 5); scat(z, 'z', 4); });
+  scat('VILLAGE', 'p', 6);
+  ['CABIN', 'GUILD', 'HOUSE', 'V0', 'V1', 'V2', 'V3', 'V4', 'V5', 'V6'].forEach(z => scat(z, 'p', 2, x => x < 5 || x > 9));
+}
+const _dt2 = drawTile; drawTile = function (ch, px, py, c, r, z, m, t) {
+  _dt2(ch, px, py, c, r, z, m, t); const hh = hash(c, r);
+  if (ch === 'i') draw(px, py, [['#bae6fd', 5, 3, 6, 11], ['#e0f2fe', 6, 2, 3, 6], ['#7dd3fc', 4, 12, 8, 3]]);
+  else if (ch === 'u') draw(px, py, [['#365314', 3, 4, 2, 10], ['#4d7c0f', 7, 2, 2, 12], ['#a16207', 7, 1, 2, 3], ['#4d7c0f', 11, 5, 2, 9]]);
+  else if (ch === 'b') draw(px, py, [['#e5e7eb', 3, 9, 10, 2], ['#f8fafc', 2, 7, 3, 3], ['#d6d3d1', 9, 11, 4, 2]]);
+  else if (ch === 'n') draw(px, py, [['#44403c', 1, 7, 14, 7], ['#78716c', 2, 5, 12, 3], ['#f97316', 4, 3, 3, 3], ['#1c1917', 3, 13, 3, 3], ['#1c1917', 10, 13, 3, 3]]);
+  else if (ch === 'e') draw(px, py, [['#15803d', 6, 3, 4, 12], ['#16a34a', 2, 6, 4, 3], ['#16a34a', 2, 6, 2, 6], ['#16a34a', 10, 5, 4, 3], ['#16a34a', 12, 5, 2, 6], ['#fbbf24', 7, 2, 2, 2]]);
+  else if (ch === 'q') draw(px, py, [['#4c1d95', 6, 2, 4, 13], ['#c084fc', 7, 3 + Math.round(Math.sin(t * 2 + hh) * 1), 2, 6], ['#2e1065', 4, 12, 8, 3]]);
+  else if (ch === 'h') { draw(px, py, [['#44403c', 5, 8, 6, 6], ['#f97316', 5, 3 + Math.round(Math.sin(t * 4 + hh)), 6, 5], ['#fde047', 7, 4, 2, 3]]); LIGHTS.push([px + 8, py + 6, 30]); }
+  else if (ch === 's') draw(px, py, [['#f8fafc', 4, 1, 8, 14], ['#e2e8f0', 4, 1, 2, 14], ['#fde68a', 3, 0, 10, 2], ['#fde68a', 3, 14, 10, 2]]);
+  else if (z === 'FROST' && ch !== '#' && hh % 4 === 0) draw(px, py, [['rgba(255,255,255,.8)', (hh >> 3) % 14, ((t * 30 + hh) % 16) | 0, 1, 1]]);
+  else if (z === 'MARSH' && ch === '.' && hh % 7 === 0) draw(px, py, [['rgba(163,230,53,.5)', 4 + (hh >> 4) % 8, 12 - ((t * 3 + hh) % 10) | 0, 2, 2]]);
+  else if (z === 'HELL' && hh % 3 === 0 && ch !== 'X') draw(px, py, [['#fb923c', (hh >> 3) % 14, 15 - ((t * 18 + hh) % 16) | 0, 1, 2]]);
+  else if (z === 'HEAVEN' && hh % 3 === 0) draw(px, py, [['#fde68a', (hh >> 3) % 14, 15 - ((t * 8 + hh) % 16) | 0, 1, 1]]);
+  else if (z === 'VOID' && hh % 5 === 0 && ch === '.') draw(px, py, [['#c084fc', (hh >> 2) % 14, ((hh >> 5) % 12 + Math.sin(t * 2 + hh) * 2) | 0, 1, 1]]);
+  else if (z.startsWith('DUNGEON') && ch === '.' && hh % 23 === 0) draw(px, py, [['#38bdf8', 8, ((t * 20 + hh) % 16) | 0, 1, 2]]);
+};
+['FROST', 'MARSH', 'MINES', 'DUNES', 'HARBOR', 'DUNGEON', 'DUNGEON2', 'DUNGEON3', 'VOID'].concat(['FOREST', 'DEADWOOD', 'TUNNEL', 'VILLAGE']).forEach(connectZone);
 /* ---- helpers: zone jump, endings ---- */
 function goZone(z, x, y) { S.zone = z; S.x = x; S.y = y; S.trail = []; S.proj = []; S.chasers = []; S.ox = S.oy = 0; S.fade = now(); syncResidents(); save(); }
 function endingScreen(title, sub, btn, fn) {
@@ -2348,10 +2483,10 @@ const _act6 = act; act = function (n) {
   if (n.t === 'dochell') return say([['OLD KNIGHT DOCTOR', '“Lad… you asked nicely. That kindness counts here. Go on. I’ll heal you before you face him.”']]);
   if (n.t === 'hellking') {
     if (S.docThreat) { say([['THE LORD OF HELL', '“The old healer’s soul told me everything, farmer.”'], ['THE LORD OF HELL', '“Your reward is eternity.”']]); S.then = () => startBattle('hellkingx', 10, n, 0); }
-    else { say([['OLD KNIGHT DOCTOR', '“Hold still, lad.” *a gentle light mends your wounds*'], ['SYSTEM', 'The Old Knight Doctor’s ghost HEALS you fully!'], ['THE LORD OF HELL', '“A healer’s blessing? Cute. Let’s see if it saves you.”']]); S.hp = maxHp(); hud(); S.then = () => startBattle('hellking', npcLv(n), n, 0); }
+    else { say([['OLD KNIGHT DOCTOR', '“Hold still, lad.” *a gentle light mends your wounds*'], ['SYSTEM', 'The Old Knight Doctor’s ghost HEALS you fully!'], ['THE LORD OF HELL', '“A healer’s blessing? Cute. Let’s see if it saves you.”']]); healParty(); hud(); S.then = () => startBattle('hellking', npcLv(n), n, 0); }
     return;
   }
-  if (n.t === 'seraph') { S.hp = maxHp(); hud(); return say([['SERAPH', '“Be restored, mortal.”'], ['SYSTEM', 'HP fully restored!']]); }
+  if (n.t === 'seraph') { healParty(); hud(); return say([['SERAPH', '“Be restored, mortal.”'], ['SYSTEM', 'HP fully restored!']]); }
   if (n.t === 'god') { say([['GOD', '“Child. Let us spar. This is only training; nothing is lost if you fall.”']]); S.then = () => startBattle('god', npcLv(n), n, 0); return; }
   if (n.t === 'dchest') { n.done = true; const g = Math.round(rand(80, 160) * scaleMul()), id = pick(['elixir', 'strtonic', 'skintonic', 'firebomb', 'ruby', 'ingot', 'relic']); S.gold += g; addItem(id); hud(); return say([['SYSTEM', `Dungeon chest: ${g} gold and 1 ${ITEMS[id].n}!`]]); }
   _act6(n);
@@ -2365,6 +2500,172 @@ const _tick6 = tick; tick = function (dt) {
   }
 };
 /* shop button fix: disabled buttons look/act disabled, big touch targets */
+
+/* ================= v7 PATCH: visible gear, character portraits, companion chatter ================= */
+const PORT = {
+  ARCHER:  { src: 'data:image/jpeg;base64,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',  col: '#4ade80' },
+  VANESSA: { src: 'data:image/jpeg;base64,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', col: '#f472b6' },
+  KING:    { src: 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBAUEBAYFBQUGBgYHCQ4JCQgICRINDQoOFRIWFhUSFBQXGiEcFxgfGRQUHScdHyIjJSUlFhwpLCgkKyEkJST/2wBDAQYGBgkICREJCREkGBQYJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCT/wAARCADIAHwDASIAAhEBAxEB/8QAHAAAAgMBAQEBAAAAAAAAAAAAAwQBAgUGAAcI/8QANxAAAgEDAgQEBAUDBAMBAAAAAQIDAAQREiEFMUFREyJhcQYygZEUI6GxwULR8AczUuEWQ4Lx/8QAGQEAAwEBAQAAAAAAAAAAAAAAAAECAwQF/8QAIxEAAgICAwACAgMAAAAAAAAAAAECESExAxJBBDITURQiYf/aAAwDAQACEQMRAD8A/OWK8RRfD2objDD702CVloYfGbGtIx/yfYUefhN3bguYtcWNQljOpSO+ayn4nIrkCMEA75O9dL8I8YIuhAXAgkyHRyMKcc/851lKUlk2hCMn1ZiYqwrpeO/DPharzh6h7cjU0andPbuKyoOD3UpB8MRKTjMrBf0O9UuSLVky4Zp9aE0XJq5Wuptfg+2bS73Mh66cDH3GK3YPgzhLKWaKU6lwQXPlPcVm/kRRsviTZ83K1GDXb3vwPE15GYJjFBjEgO+/p/n74DJ+DeE4ALSKTjGXwRjnt6+veh/IgH8TkZwieYeooiAKQeorsbj4EgeQvaTvGuMgP5h/esif4V4pAZCbcMiBm1q4IIG/v9KceaEvSZfH5I+CkL6x69aZhhluG0QxvI3ZRk1nxs0TA4KgjmQcYo0nHLq3jcQTNawEYKocZ9SeefWnL/BRV/YcvOHXtmoae3kRW64yM9tqTyQcHII6GgcJ+J720lWSG6leIMNcbtkOB03/AIrqLrgEvGZjxHhZia3uR4mHbBVjzH3qVNxdSLfEpZgctc2FzbgNLEVB68xWXdMR4hBwRtWrHc3EAKhiVYbq24OazblcyMGBAcf/ALWr0YKrwZsqxrCWYZPcUPh05huVyfK2xzRJojoaHJLLuPWmOH8OF3ADMpXBwpGxpMaTvBv8N43d2EmmFhIunBjbcEVa1kmllDSSxxNnZyOQ6e9LQwrGMAbjrRwo+tZOjoTfp08PErOzWNbif8WWGS6Jsv33rXXjNnPELeynDTsv5S50nPQb9a4QDHeiLoAI1Msi4aN179qyfGjZczNbjHxDPdFLcNJAV/3ivlbI2wO1dPwq4xZQyTYhVlziVhq9N64O64i9/e/iXC+IAurI2JA5/wA1WSR538SZ2kY8yxyaT47SQR5qbez6gro6KysrKRkFeorB+KfiKThMBWyML3R2EbLkgY57H96wl+I54bYwW8QhwMKysS3uSeZ/T0rHfU7FmJLE5JJ51MOLNs0nz4qIvPezXr+NczPLK2xZzvWJxScS3AgeTRGmCccyTWzNbCQhgMMOvf0NYXEbJ47kNLIXMh5gde1dUaOHkuh22t4VUNFuO+c12vwrxleH8NeE+KfzWPlxjcCuNs4fDjruvhThXDpuFeLeSRrI8jEBn07DA/g1HLrJrwJ9sHIQXDIArAMvL2od4BKgAUZJyN+R71Y6UGWOAKE2RqIO7bAt0+ldDdHJFWKQabwDyEEHBJHKtiJBgb0G0tgsY/YUwzaTgVi2dEVWycZO527VcDAwKooxvRVFSUeqrpqXGcetE0+lR70AAVCS2eWaMOW1UIJIAPOrCDDEqSM8xQCJxXsVYL6VOmkMuiwOojdNLE7SKTn6jrSHFuGyR6oZQFfAZTnY9iD2rUs5predZIGKuORxn9K72P8AC8YsU1m2mcDDFEGM9cqeWe1RKbizWHH+RUfLeDwW0l1bx3DP4TSBX0jLHfkPU8q7S34cl3AktzbIrEYVCBhFzsoHQY6fzSN98Pw8C41YcSjkkWFbka0QZVR/S3fnkEe1dTLZ/mM0SEhzqOHwMnn1+v1qlyrtZm+GXVo+TE65AVdiB9qsPNJvyFU2RMA4x1NWtFyMlgzZzWzZjFVgcVwq9s1C771R85xVi2hegqTQKg1UdIy2wpeFxj096dtnR1JB3zj2qWCBMCvMYrzkBRtt3pp0BTfGOWO9LFcYTOUAKnNKxkW/mXUe+33ooUHPagWulLdAG1YHM9d6bVQFAoY0UaJ9IlYYD5A9cHBP+d6kwOIfG0nRq059cZpm3g8WKfJAVAJATzJ5YHuMn/5p+HiHDpOFNaS5EgU4AXGTzz71Ll+i+qeWYiNpbOAfQ1tfD3E3t3KG5hCk/wC1NkZHo/IH0O1YXXnUFmU5BO4xRJXgUZdXaPpF5F41oZFjV2Qa0Ddxv09quh1orMFyQCaxvhbi8M8H4ZozFL0xnQ+O3QHuK9xR72K8cQNK0ZwRoJIHcbcjXLTTo7O6a7HzCXLRt5tIPlBAp23GmMDBwBikS6DQGbkdlG5JrTTZR0r0GeZEEdn2q7glTtQnY+Ic70ZWBXekxmZxCG5jTVDLhMZ0gb01Bb8RsA91qjuLaFFkkcMF2JwMAnLfTNFcBkKHpypWSNtBi1OIzzUMcVSIarI+OO28kLFiGI3Gnnmr2f4i5UPKpRSM7jBOaR4bYJHMZlXVI5wpO+O5roI4GiQjxHcdQeVRKlouNvZm3EEmnxLcElTqC9/SoPGo4GKzh4z1DDBFasMTMo1eTNJcY4ZHLAPGiwzgaHxvjPQ/Q0k1plNPaA2knGuLiKbhtsBAjlhJIQAxBAIAJ3O425mk723vbbi81rDfJcRxHAmCYDDuB2q1rFJbIyRSPGj7uoY4J9RnenFijjRMNmRtm77cv0xVWkLcS0ELlRJJIWPtgfaiNgA1V3zgAYA2FUaTIxUFG98LcRdb38OXiKP/AEvsSfQ9/Q866C94aLicyC5mhJ5qmME99xXA2YV7hQ0wh6h2UkZ9cb49a76ThsPEFjmuEDSBApIY4/751hyqnZ08MrjTPk8q4nTSgznbP71pRSAjB51nTM/iFgAqqMajzo1rK2jJIZskZ9M11tHDF0w0ynUW3P0qofAxyo2Q67k/TrSzjSTQN4ILsCcnnyqdTSELvXiQRyokIy3tTEM2nlkQY2BFbeKxrZC0ygHG+c9q0xfWuCBMhPXDb1EiosMu3POB2rpP9QorOOLglvaoFRLXX66WxjPfqazfh6xtuOXUlsLyJJPDYxgn5mA2Gaf/AAb8W4ddyz5ElpbpEmRyCDOP4rFupHRFWmcNLHoJXqORqqyEnc7Y5Ypi7jOA30pJgwPKtlkw0FaQAE5qgk1DlVQjGp0YAAOKBWXTnq3UDriumeXiwIa3vneJ1DK2c5yK54ZS3xsVOx9+9Uura8uhDJZNMqeGFZUJwGBOf4P1qJKzWMqMuWMmNs5PoOftS9vM5aZY1IGeo3Bxyp87EHoaBLAZHYaiitgnTzNbHO0HilGlfNzFVlLatRI01k2120DKkrDSCx1dTWlHJ4iB/wDkM+wooFKyHYhc4+9MQNlQ3elpAw3QAgc89amwnjkLgMfmACn+nblQFhuISukQWNguvOonsN8UCK4hdAS+/XAyKZvrYXVuVPQ5G+Kx/BFqxGHGRjLEb+2KpESuz6H/AKf/ABjwT4Qvp+I3C3dzdfhpI4Y/DXwWZhjEgJyV+ldBwbiT/wDjd7NOVDSGRQV5HcgfxXyO0tY55T+W7uWyG1YUe5549BXbQ8QZeEpYKMRxgDPU9cn65rHlhk6OGbWxO5XVEwHTes8yLy3pxryNJZE1LrVdRHpWS0ssg06diMU0hNjJkB+VgDXow7PsTjmSaUWJgu+S3I57Ux4oiGx3HamyUMFwxHkDBdyvQgVKcQvbSSaPh8rGDxGI8mfT+KznlMkiOjsFKsDjY5O3963+DS39taEQx60Zy2SOu39qmSouGXRziPhTGzBjj6irqdQUmrSRLjBG/PIoCpKjDByuevOtDIHcWMdyN8K2dyP3pRpZbZVz/wCvyMO4rTDaxkcwcUtcRpLG3l586aE16iWuFdF0nZhWfLK0F0kig+Ug5zzoUkbRymMMQDuuetEZ2aAmRCOmcU6Ibs22v4ZIVOoKWwQDzpaaQyRlVgeQHbcYFZlhcpFIEnGqI8sj5T3rdjigdcqwI9DSeCk7KRSlSpeKWPljy7fpWnBdxureEyyPpLaFbc4GT7AdaV8KKLcnAHUtikOI3QMn4KywuSVmcLs2dse3r1qWrKuiX4hHPOyIgAkP5kgHzn+1Nr5BgjygUva2ogj0nB61ednKMEz2HrTBX6FedA6AMCGB+nWlPCad1Z8gKN89d6hLciYONkUY5fMTzNOKnMfejQbIjRVAx0/Wu84KyzWKmD5FwueWSFGf1zXDEKNlycde9d5wayksuHRRHGrGpgehO+Kw5tHV8dZZwGk8s1RgxGCxXsTRaoy6lxnHqK3OQHjn0YdqGwYt0zV/MH0M2QN84oDs0Lgt8pG2OhpgwM9ss8RC4BXIHpVEB8AM2+BhqcOA2rvsaAYnjkIAyjb/APVBNCK2qtNscjOQO4qLiOVZZCAQvPtmnUt9M2pc5GxWisAQQR9Kdi6mTE5csZCW8pIya2bKDwYwz7yMAT9qXFkjuJEwpByRjmK0Ifl1Hmd/YUmyorJYAkZbbPQUOYh2VFOw3OO1S5cg+HjnirJFpGBuW5+tIv0nTsMcqvABG2p+p5Uwlv8AlsSfkUtQ1drhkiVVUKc5+1TY1E2vhzhaXkj3lzkJAVcrjYqMnP6VFxx6/mnka2YiPWdgucb5x9iBU/EPG1ijNlZ4TUoWRl/qxz+lPcAaK24VAjDzkamwOp3/AGxWOfs0dMVnqmcl0qKkHnUV0nGQy564oTLrUqwH96NjJobjcfvSATcSQ5GNa5HvvTIkVSDknPLtXpUDAnIwRigx+WIA/KdjntTFoO6BiJF5nn615owy8gTQ1PhlR/SNsHpTC76uRwcbUihRkMbalJ+lHVy5UDkR0qsoC9PWrWZDA6QD0GKGL0YSIKoH2Ao0UWPMRv27VKxYw2TkUZx4EcUxk0lywAX5hjr98VDZokMXkT8PtnieRBNKmGi5lNxgHs3M+lIKi2MAnMqs7A4AHIjl/npS810FYFjkk++T3oMUTcTu1SSQxRLgs5BIVR199/1oSwHb9EwMsk6vMx0FvMeuOtPvxa4bSIyI1UacAZrPK/muARpBOCNs71tNwloFjXDHKBgyqSGz1/ztTk0thBSejHVm3LDA7VYNkVc+u1UAwcVZmXFQSOXXpUatPOofYjPekBQqCunoaCSUwDyXai5waG41ZJPM8u1MTPKgJCE74O9XjjaB26q43PrURKSQrc8c6MQQMMOVJjRRnV9yNqPZIqFgNiTq+lLmP5scj0qLOV1Qsdyp07UMd5HLm5MeAmC2QN6Wlncrq8znUdz35mropG7bknemzhhoVQOmw70tFZZn23D5ru5AwdRPXkK1b4aUgs0UKFRSTyG43/vWx4Vrwng8kjavxIkGoAjOBggZ9/2rmbm6e8wXDcsebmfWpT7Mproq9AhgMgHAYiuim+IXsYLSJRr/ACFJPrvWFb2T3YkEeCY11aepGcHHtnNM3fBuIQSLGbeWYBRh4lLKR70S6t5CDlHKAEAjeqMcDUN8dKu0TIhAO3PfnVTpA6/Q1ZkDkOsAD3qrMfCDHoDUplTpI9qpO3hxy9sahTAnOcHO+MVCRHRq65wfagCbOSPlxtWhAuIVBHTlQxLILQXVW64waJG2pvN261aIBWZe1SyjbIFIogoMalP/AHQVcwsxA58xRVwgwdwd6s0etdS/Mf1pDL+R4xgg5G2KJaW00zjcJGDjJOM4571aKAabVQwBKZOdgMkn9qaluYgrLHG6bYXfP1/mpbLS9YXiT28Nituhy7EYOOe+5++30rNhsi15HBKjAsQCvI70PUXcFjkAjnWksy3d4ZACJCg0HswGDS0ht9mITw3HDJZE8y6spqxjUMg7H7V1nCuN291aCSaeGF9RBRmwR2/TFYk+eKAWagGaJXJboWGAD9QKwpY3hkeN18ykg7UnFSWRqbg7Wh7fNLywowJTyljvpr1erQyewIikGNwxpXiYPgmRcg50MD2Ner1NbJeitpbkQAnP19a0Yz5RivV6hsFovpyc9ak+YEV6vUiioUquSNuRrwUrsOQ3Fer1AGiLKWfxpI1BTQrHJxgH+dqXyJITj+nvXq9UJmjWAcURJIA5c/Sn2EdmpRSDPo83pnoPpz969XqbyJF+CII7/WzDcEZ96ni7QPd6vDEmVHmU8+Yr1eqH9i7/AKn/2Q==',    col: '#d97706' }
+};
+Object.values(PORT).forEach(p => { const i = new Image(); i.src = p.src; p.img = i; });
+
+const GEAR_COL = { ironsword: '#9ca3af', sword: '#e2e8f0', mythsword: '#2dd4bf', bonesword: '#e7e5e4', cvblade: '#dc2626', excalibur: '#fde047',
+  vest: '#b45309', plate: '#cbd5e1', mythmail: '#14b8a6', scalemail: '#22c55e', cvarmor: '#dc2626', crusader: '#fbbf24' };
+const lookCol = () => GEAR_COL[S.gear.armor] || GEAR_COL[S.gear.weapon] || (S.armoured ? '#a855f7' : '#f8fafc');
+
+/* ---- Ryan's sprite is built from what he wears ---- */
+function weaponRects(W, arm, t) {
+  const sh = Math.floor(t / 100) % 12, fl = Math.floor(t / 90) % 3, glove = ['#1f2937', 13, 10, 3, 2];
+  switch (W) {
+    case 'ironsword': return [['#9ca3af', 14, 1, 2, 8], ['#e5e7eb', 14, 1, 1, 8], ['#e5e7eb', 14, 0, 1, 1], ['#57534e', 13, 9, 4, 1], ['#78350f', 14, 10, 2, 3], glove, ['#57534e', 14, 12, 2, 1]];
+    case 'sword': return [['#e2e8f0', 14, 0, 2, 9], ['#ffffff', 14, 0, 1, 9], ['#94a3b8', 12, 9, 6, 1], ['#1e3a8a', 14, 10, 2, 3], glove, ['#94a3b8', 14, 12, 2, 1], ...(sh < 9 ? [['#ffffff', 15, sh, 1, 1]] : [])];
+    case 'mythsword': return [['#2dd4bf', 14, -1, 2, 10], ['#ccfbf1', 14, -1, 1, 10], ['#0f766e', 12, 9, 6, 1], ['#134e4a', 14, 10, 2, 3], glove, ['#a7f3d0', 14, 12, 2, 1], ...(sh < 10 ? [['#ffffff', 14 + (sh % 2), -1 + sh, 1, 1]] : [])];
+    case 'bonesword': return [['#e7e5e4', 14, -1, 2, 10], ['#d6d3d1', 13, 1, 1, 1], ['#d6d3d1', 13, 4, 1, 1], ['#d6d3d1', 13, 7, 1, 1], ['#d6d3d1', 16, 2, 1, 1], ['#d6d3d1', 16, 5, 1, 1], ['#d6d3d1', 16, 8, 1, 1], ['#dc2626', 15, 0, 1, 8], ['#a8a29e', 12, 9, 6, 1], ['#292524', 14, 10, 2, 3], glove];
+    case 'cvblade': return [['#0a0a0a', 14, -2, 2, 12], ['#dc2626', 15, -2, 1, 12], ['#7f1d1d', 12, 9, 6, 1], ['#7f1d1d', 12, 8, 1, 1], ['#7f1d1d', 17, 8, 1, 1], ['#450a0a', 14, 10, 2, 3], glove,
+      fl === 0 ? ['#f97316', 13, 2, 1, 2] : fl === 1 ? ['#f97316', 16, 0, 1, 2] : ['#fbbf24', 13, 5, 1, 2]];
+    case 'excalibur': return [['#fef9c3', 14, -3, 2, 13], ['#ffffff', 14, -3, 1, 13], ['#fbbf24', 11, 9, 7, 1], ['#fbbf24', 11, 8, 1, 1], ['#fbbf24', 17, 8, 1, 1], ['#38bdf8', 14, 9, 2, 1], ['#fff7ed', 14, 10, 2, 3], glove, ['#ffffff', 13 + (sh % 5), -3 + sh, 1, 1]];
+    default: return arm ? [['#09090b', 14, 1, 2, 11], ['#ef4444', 13, 9, 4, 1]]
+      : [['#78350f', 14, 8, 1, 6], ['#cbd5e1', 12, 6, 4, 1], ['#cbd5e1', 12, 7, 1, 1], ['#9ca3af', 15, 7, 1, 1]];
+  }
+}
+function ryanList(g = S.gear, arm = S.armoured, t = now()) {
+  const L = [], A = g.armor, W = g.weapon, C = g.charm, skin = '#ffedd5';
+  const pulse = Math.sin(t * .006) > 0, flick = Math.floor(t / 130) % 2;
+  if (A === 'crusader') L.push(['#f8fafc', 3, 7, 10, 8], ['#cbd5e1', 3, 14, 10, 1]);
+  if (A === 'cvarmor') L.push(['#450a0a', 3, 7, 10, 8]);
+  const leg = { plate: '#94a3b8', mythmail: '#0f766e', scalemail: '#14532d', cvarmor: '#0a0a0a', crusader: '#d4a017' }[A] || '#0f172a';
+  const boot = { vest: '#451a03', plate: '#475569', mythmail: '#134e4a', scalemail: '#052e16', cvarmor: '#18181b', crusader: '#92400e' }[A];
+  L.push([leg, 4, 12, 3, 4], [leg, 9, 12, 3, 4]);
+  if (boot) L.push([boot, 4, 14, 3, 2], [boot, 9, 14, 3, 2]);
+  L.push([arm ? '#18181b' : '#64748b', 4, 7, 8, 6]);
+  if (arm && !A) L.push(['#a855f7', 2, 6, 2, 3], ['#a855f7', 12, 6, 2, 3]);
+  switch (A) {
+    case 'vest': L.push(['#92400e', 4, 7, 8, 6], ['#451a03', 7, 7, 2, 6], ['#451a03', 4, 12, 8, 1], ['#fbbf24', 7, 12, 2, 1], [skin, 2, 6, 2, 2], [skin, 12, 6, 2, 2], ['#78350f', 2, 8, 2, 3], ['#78350f', 12, 8, 2, 3]); break;
+    case 'plate': L.push(['#cbd5e1', 4, 7, 8, 6], ['#f8fafc', 5, 8, 2, 3], ['#64748b', 7, 7, 2, 6], ['#475569', 4, 12, 8, 1], ['#e2e8f0', 2, 6, 3, 3], ['#e2e8f0', 11, 6, 3, 3], ['#94a3b8', 2, 9, 2, 2], ['#94a3b8', 12, 9, 2, 2]); break;
+    case 'mythmail': { const s = Math.floor(t / 90) % 14;
+      L.push(['#14b8a6', 4, 7, 8, 6], ['#5eead4', 5, 8, 2, 2], ['#0f766e', 4, 9, 8, 1], ['#0f766e', 4, 11, 8, 1], ['#0d9488', 7, 7, 2, 6], ['#2dd4bf', 2, 6, 3, 3], ['#2dd4bf', 11, 6, 3, 3], ['#99f6e4', 2, 6, 3, 1], ['#99f6e4', 11, 6, 3, 1], ['#0f766e', 4, 12, 8, 1]);
+      if (s < 8) L.push(['#ffffff', 4 + s, 7 + s % 5, 1, 1]); break; }
+    case 'scalemail':
+      L.push(['#166534', 4, 7, 8, 6]);
+      for (let r = 0; r < 3; r++) { L.push(['#14532d', 4, 9 + r * 2, 8, 1]); for (let c = 0; c < 4; c++) L.push(['#4ade80', 4 + c * 2 + r % 2, 8 + r * 2, 1, 1]); }
+      L.push(['#14532d', 2, 6, 3, 3], ['#14532d', 11, 6, 3, 3], ['#22c55e', 3, 6, 2, 1], ['#22c55e', 11, 6, 2, 1], ['#fbbf24', 2, 4, 1, 2], ['#fbbf24', 13, 4, 1, 2]); break;
+    case 'cvarmor': L.push(['#0a0a0a', 4, 7, 8, 6], ['#dc2626', 4, 7, 8, 1], ['#dc2626', 4, 12, 8, 1], ['#27272a', 2, 6, 3, 3], ['#27272a', 11, 6, 3, 3], ['#18181b', 2, 3, 1, 3], ['#18181b', 13, 3, 1, 3], ['#dc2626', 2, 2, 1, 1], ['#dc2626', 13, 2, 1, 1], [pulse ? '#ef4444' : '#7f1d1d', 7, 9, 2, 2]); break;
+    case 'crusader': L.push(['#fbbf24', 4, 7, 8, 6], ['#fef3c7', 5, 8, 2, 2], ['#ffffff', 7, 8, 2, 4], ['#ffffff', 5, 9, 6, 1], ['#b45309', 4, 12, 8, 1], ['#fde68a', 2, 6, 3, 3], ['#fde68a', 11, 6, 3, 3], ['#fbbf24', 2, 9, 2, 2], ['#fbbf24', 12, 9, 2, 2]); break;
+  }
+  if (C === 'fang') L.push(['#78350f', 6, 7, 4, 1], ['#f8fafc', 7, 8, 1, 2]);
+  if (C === 'ward') L.push(['#78350f', 6, 7, 4, 1], ['#e5e7eb', 7, 8, 2, 2], ['#111827', 7, 8, 1, 1]);
+  if (C === 'luck') L.push(['#4ade80', 3, 11, 2, 2], ['#166534', 4, 12, 1, 1]);
+  // head
+  L.push([skin, 4, 2, 8, 5], ['#09090b', 3, 0, 10, 3]);
+  if (A === 'plate') L.push(['#cbd5e1', 3, 0, 10, 3], ['#94a3b8', 3, 3, 10, 1], ['#f8fafc', 4, 0, 3, 1]);
+  if (A === 'mythmail') L.push(['#14b8a6', 3, 0, 10, 3], ['#0f766e', 3, 3, 10, 1], ['#06b6d4', 7, -2, 2, 2], ['#67e8f9', 7, -3, 2, 1]);
+  if (A === 'scalemail') L.push(['#166534', 3, 0, 10, 3], ['#14532d', 3, 3, 10, 1], ['#e5e7eb', 2, -2, 2, 3], ['#e5e7eb', 12, -2, 2, 3]);
+  if (C === 'cvhelm') L.push(['#0a0a0a', 3, 0, 10, 4], ['#27272a', 2, -3, 2, 4], ['#27272a', 12, -3, 2, 4], ['#dc2626', 2, -3, 1, 1], ['#dc2626', 13, -3, 1, 1], ['#7f1d1d', 3, 3, 10, 1]);
+  if (C === 'halo') L.push([flick ? '#fde047' : '#fef9c3', 5, -3, 6, 1], ['#fde047', 4, -2, 1, 1], ['#fde047', 11, -2, 1, 1], [flick ? '#fef9c3' : '#fde047', 5, -1, 6, 1]);
+  const ec = C === 'cvhelm' ? '#ef4444' : '#a855f7';
+  L.push([ec, 5, 4, 2, 1], [ec, 9, 4, 2, 1]);
+  L.push(...weaponRects(W, arm, t));
+  if (C === 'sigilring') L.push([pulse ? '#22d3ee' : '#0e7490', 13, 9, 1, 1]);
+  return L;
+}
+/* a little picture of Ryan for the bag / shop; `over` lets a card show "you in this item" */
+function ryanCanvas(over, px = 3) {
+  const g = Object.assign({}, S.gear, over || {}), c = document.createElement('canvas'); c.width = 24; c.height = 22;
+  const k = c.getContext('2d'); k.translate(4, 4); k.fillStyle = 'rgba(0,0,0,.4)'; k.fillRect(3, 14, 10, 2);
+  ryanList(g, S.armoured, 0).forEach(([col, a, b, w, h]) => { k.fillStyle = col; k.fillRect(a, b, w, h); });
+  c.style.cssText = `width:${24 * px}px;height:${22 * px}px;image-rendering:pixelated;background:#0b1220;border:2px solid #334155;flex:none;margin-top:.3em;display:block`;
+  return c;
+}
+function gearPreview() {
+  const g = S.gear, nm = id => ITEMS[id].n + (S.up[id] ? ` +${S.up[id]}` : '');
+  return el('div', 'gp', [ryanCanvas(null, 4), el('div', 'gp-info', [
+    el('b', '', 'RYAN — how you look'),
+    el('small', '', '⚔ ' + (g.weapon ? nm(g.weapon) : S.armoured ? 'Void Broadsword' : 'Chipped Sickle')),
+    el('small', '', '🛡 ' + (g.armor ? nm(g.armor) : S.armoured ? 'Void Dragon-Scale Armour' : 'Farm clothes')),
+    el('small', '', '✨ ' + (g.charm ? nm(g.charm) : '—'))])]);
+}
+
+/* ---- Portraits in the dialogue box ---- */
+function setPortrait(who) {
+  const box = $('dlg-portrait'), ry = $('dlg-img'), ot = $('dlg-img-o'), gear = $('dlg-gear'), nm = box.querySelector('b'), P = PORT[who];
+  if (who !== 'RYAN' && !P) { box.style.display = 'none'; return; }
+  box.style.display = 'block'; nm.textContent = who;
+  if (who === 'RYAN') {
+    const col = lookCol(), ic = ['weapon', 'armor', 'charm'].map(s => S.gear[s] ? ITEMS[S.gear[s]].ic : '').join('');
+    ry.style.display = 'block'; ot.style.display = 'none'; nm.style.color = '#c084fc';
+    box.style.setProperty('--pc', col); box.classList.toggle('glow', col !== '#f8fafc');
+    gear.textContent = (S.armoured ? '🖤' : '') + ic; gear.style.display = gear.textContent ? 'block' : 'none';
+  } else {
+    ry.style.display = 'none'; ot.style.display = 'block'; if (ot.dataset.w !== who) { ot.src = P.src; ot.dataset.w = who; } ot.alt = who;
+    nm.style.color = P.col; box.style.setProperty('--pc', P.col); box.classList.add('glow'); gear.style.display = 'none';
+  }
+}
+
+/* ---- Quick comments with a portrait (don't pause the game) ---- */
+function chatter(who, text, ms = 3600) {
+  const box = $('chatter'), P = PORT[who]; if (!box) return;
+  const d = el('div', 'chat'); d.style.setProperty('--c', P ? P.col : '#c084fc'); d.style.animation = `tin .2s, tout .5s ${ms / 1000}s forwards`;
+  const src = who === 'RYAN' ? RY.src : P && P.src;
+  if (src) { const i = new Image(); i.src = src; d.append(i); }
+  d.append(el('div', 'chat-t', [el('b', '', who), el('span', '', text)]));
+  box.append(d); while (box.children.length > 2) box.firstChild.remove();
+  setTimeout(() => d.remove(), ms + 600);
+}
+const CHEER = {
+  weapon: { VANESSA: ['Sharp. Try not to cut yourself, farmer.', 'Ooh, shiny. Does it come in pink?'], ARCHER: ['A good edge. Keep it clean.', 'Well balanced. It suits your grip.'], KING: ['*approving rumble*', '*sniffs the blade, huffs*'], RYAN: ['A fine weight in the hand.', 'Feels right.'] },
+  armor: { VANESSA: ['Finally, you look like a hero.', 'Armour suits you. Don’t scuff it.'], ARCHER: ['Solid. You’ll be harder to hit.', 'Good. I’d rather not patch you up again.'], KING: ['*proud huff*', '*nudges your armour, satisfied*'], RYAN: ['Heavier, but I feel safer.', 'Let them try me now.'] },
+  charm: { VANESSA: ['A trinket? Cute. It’s working, I think.', 'Ooh, accessories.'], ARCHER: ['Small things win fights.', 'Keep it close.'], KING: ['*curious sniff*', '*soft growl*'], RYAN: ['Every bit helps.', 'Lucky or not, I’ll take it.'] }
+};
+const CHEER_SP = {
+  cvblade: { VANESSA: 'That blade is whispering. I love it.', ARCHER: 'That sword feels hungry. Be careful, Ryan.', KING: '*low, wary growl*', RYAN: 'It hums like it knows my name.' },
+  cvarmor: { VANESSA: 'Spiked, black and menacing. Very you.', ARCHER: 'You look like something out of a nightmare.', KING: '*backs up half a step, then nods*', RYAN: 'The Vanguard’s armour… it fits.' },
+  cvhelm: { VANESSA: 'Horns. Of course there are horns.', ARCHER: 'I can’t see your eyes anymore. Just red.', KING: '*unsure growl*', RYAN: 'The helm is cold. Almost… alive.' },
+  excalibur: { VANESSA: 'Now THAT is a legend. Even I’m impressed.', ARCHER: 'A blade of heaven. May it fly true.', KING: '*bows his great head*', RYAN: 'So light… and so bright.' },
+  crusader: { VANESSA: 'Gold plate? You’re blinding me.', ARCHER: 'A saint’s armour. Wear it well.', KING: '*sits tall, proud*', RYAN: 'Blessed plate. I won’t waste it.' },
+  halo: { VANESSA: 'A halo? Don’t let it go to your head.', ARCHER: 'You glow. Try not to be a target.', KING: '*stares, tilts head*', RYAN: 'I feel… lighter.' },
+  scalemail: { VANESSA: 'Dragon scales! Where do I get a set?', ARCHER: 'Scales that turn steel aside. Impressive.', KING: '*rumbling approval*', RYAN: 'Forged from the dragon itself.' },
+  bonesword: { VANESSA: 'A dragonbone blade. Delightfully morbid.', ARCHER: 'Bone and crown… a fitting weapon.', KING: '*sniffs the bone, grumbles*', RYAN: 'Forged from the fallen. It feels right.' }
+};
+const CHEERED = new Set();
+function equipCheer(id) {
+  const it = ITEMS[id]; if (!it || !it.slot || CHEERED.has(id)) return; CHEERED.add(id);
+  const w = pick(S.party.length > 1 ? S.party.filter(p => p !== 'RYAN') : ['RYAN']), sp = CHEER_SP[id];
+  chatter(w, sp ? sp[w] : pick(CHEER[it.slot][w]));
+}
+
+/* ---- Companion shouts in battle (with a mini portrait in the log) ---- */
+const SHOUT = { archer: ['Steady… loose!', 'The wind carries it true.', 'A single arrow can change a battle.'], vanessa: ['Burn!', 'Magic isn’t just power. It’s freedom!', 'Try not to blink.'], king: ['*ROOOAAAR!*', '*a thunderous growl*', '*slams into the foe*'] };
+const SHOUTWHO = { archer: 'ARCHER', vanessa: 'VANESSA', king: 'KING' };
+function shout(k) { const w = SHOUTWHO[k]; if (w && Math.random() < .55) blog(`${w}: “${pick(SHOUT[k])}”`, 't', w); }
+
+/* ---- Companions chime in when you enter somewhere new, and after big fights ---- */
+const BANTER = {
+  GUILD: { VANESSA: 'So this is the Guild. Smells like old ink and bad decisions.', ARCHER: 'Too many eyes in here. I prefer the treeline.', KING: '*sniffs, then sits by the door*' },
+  TUNNEL: { VANESSA: 'Dark, damp and full of rocks. Wonderful.', ARCHER: 'Stay quiet. Stone creatures hear everything.', KING: '*a low growl echoes down the tunnel*' },
+  VILLAGE: { VANESSA: 'A real town! I’m buying something shiny.', ARCHER: 'Keep your hands to yourself in the houses, Ryan.', KING: '*nervously eyes the crowd*' },
+  CRYPT: { VANESSA: 'Bones, dust and gloom. Charming.', ARCHER: 'The dead don’t sleep here. Watch your back.', KING: '*bristles, fur standing on end*' },
+  DEADWOOD: { VANESSA: 'Even the trees look sad here.', ARCHER: 'No birdsong. That’s never a good sign.', KING: '*growls at the empty trees*' },
+  BRIDGE: { VANESSA: 'Undead knights on a bridge. Subtle.', KING: '*plants himself in front of you*' },
+  HOUSE: { VANESSA: 'A lantern in the window… someone lives here.', ARCHER: 'I can barely feel my fingers. Hurry, Ryan.', KING: '*whines softly*' },
+  GHOST: { VANESSA: 'This place feels wrong. Like the air is watching us.', ARCHER: 'There are no footprints. Not a single one.', KING: '*presses close to your side*' },
+  FROST: { VANESSA: 'Cold! Somebody warm me up. Fireball, anyone?', ARCHER: 'Fresh tracks in the snow. Wolves.', KING: '*shakes snow from his fur, content*' },
+  MARSH: { VANESSA: 'Ugh. My boots. Ryan, you owe me boots.', ARCHER: 'Something is whispering in the reeds.', KING: '*wades in without a care*' },
+  MINES: { VANESSA: 'Ore everywhere. Ryan’s forge will love this.', ARCHER: 'Tight shafts. Poor shooting angles.', KING: '*sniffs at the dark tunnels*' },
+  HARBOR: { VANESSA: 'Salt air and shady deals. Finally, some atmosphere.', ARCHER: 'Smugglers on every dock. Keep your purse close.', KING: '*stares at a fishmonger, drooling*' },
+  DUNES: { VANESSA: 'It’s so hot I could set myself on fire. Not helping.', ARCHER: 'Watch the horizon. Sand hides things.', KING: '*pants heavily in the heat*' },
+  DUNGEON: { VANESSA: 'Cultists. There’s always cultists.', ARCHER: 'Narrow halls. Stay behind me.', KING: '*growls at every shadow*' },
+  VOID: { VANESSA: 'Reality is thin here. I can feel the pull.', ARCHER: 'Nothing natural lives in this place.', KING: '*howls once into the rift*' }
+};
+const REACT = {
+  cursed: { VANESSA: 'A cursed knight, beaten by a farmer. I’ll never let you forget it.', ARCHER: 'He was bound for a hundred years. Now he rests.', KING: '*a long, satisfied exhale*' },
+  bounty: { VANESSA: 'Forty hunters failed and you did it with a sickle.', ARCHER: 'Good shot, good fight. Let’s hand him over.', KING: '*stands over the captive, daring him to run*' },
+  dragon: { VANESSA: 'I just watched you beat a dragon. I need to sit down.', ARCHER: 'The tunnel is open. That was too close.', KING: '*roars at the fallen dragon*' },
+  boneking: { VANESSA: 'His crown looks heavy. Good riddance.', ARCHER: 'The dead stay dead. Let’s keep it that way.', KING: '*nudges the bones away, wary*' },
+  doctor: { VANESSA: 'You did what you had to. Doesn’t mean it feels clean.', ARCHER: 'The cold is fading. But that old man didn’t deserve this.', KING: '*a low, sorrowful huff*' },
+  hollowmayor: { VANESSA: 'Burn the hall, he said. I’m happy to oblige.', ARCHER: 'Hollowmere can finally rest.', KING: '*howls softly for the lost*' },
+  bountymaster: { VANESSA: 'The contract is void. Frame it.', ARCHER: 'A man who hunts others for coin. Good riddance.', KING: '*snorts at the fallen scroll*' },
+  icewyrm: { VANESSA: 'An ice dragon? Rude. I was starting to like the snow.', ARCHER: 'The pass is quiet. Finally.', KING: '*shakes the frost from his fur*' }
+};
 
 /* ---------- Boot ---------- */
 if (!hasSave()) $('btn-load-game').style.opacity = .5;
